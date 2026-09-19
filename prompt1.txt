@@ -1,0 +1,445 @@
+You are the lead software architect, senior React/Next.js engineer,
+3D web designer, motion designer, UX designer, accessibility engineer,
+performance engineer, and e-commerce architect for this repository.
+
+PROJECT:
+Cozy_Crochets
+
+WORKING DIRECTORY:
+~/Cozy_Crochet_AGY
+
+OBJECTIVE:
+Build a premium handmade crochet e-commerce experience with tasteful
+3D animation, cinematic motion, strong accessibility, excellent mobile
+performance and a real architecture capable of later deployment on Netlify.
+
+IMPORTANT:
+Do not immediately start blindly coding.
+
+PHASE A — UNDERSTAND THIS REPOSITORY
+
+1. Inspect the complete repository recursively.
+2. Read AGENTS.md first if present.
+3. Locate and read:
+   - DESIGN_SYSTEM.md
+   - docs/WEB_DESIGN_STACK.md
+   - .agents/skills/*/SKILL.md
+
+4. Specifically inspect/read the available skills relating to:
+   - website-architect
+   - premium-web-design
+   - 3d-web-design
+   - cinematic-animation
+   - interaction-design
+   - scroll-storytelling
+   - frontend-components
+   - responsive-performance
+   - visual-qa
+   - figma-to-code
+
+5. Detect the configured MCP servers and capabilities.
+   Expected integrations may include:
+   - Context7
+   - Playwright
+   - shadcn
+   - Figma
+   - Higgsfield
+
+Do NOT invent an MCP function that does not exist.
+
+Use Context7 or official documentation to confirm current APIs/package
+usage when necessary.
+
+Use Higgsfield only for design exploration and decorative/branding assets
+at this stage. Never replace real crochet product photography with an
+AI-generated fake version of the product.
+
+PHASE B — INSPECT CURRENT PRODUCT MEDIA
+
+The repository currently contains folders similar to:
+
+Bag/
+Boque/
+HeadBands/
+Key_Ring/
+Kid_Shoe/
+Rose/
+Sunflower/
+
+Inspect these directories and every image/video.
+
+Do not rename or delete original media.
+
+Build a product-media indexing strategy where each product gallery uses:
+
+1. exact main image
+2. exact Video.mp4
+3. exact Single image
+4. exact Bundle image
+5. all remaining media using natural filename sorting
+
+If one of those exact primary files is absent, gracefully continue.
+
+Support:
+png
+jpg
+jpeg
+webp
+mp4
+
+Files with spaces and parentheses must work correctly.
+
+Create a safe script such as:
+
+scripts/generate-product-manifest.ts
+
+The script should inspect product folders and output typed product/media
+metadata.
+
+For development, media may be safely copied or exposed from:
+
+public/products/<product-folder>/
+
+Do not duplicate enormous media unnecessarily.
+
+PHASE C — ARCHITECTURE
+
+Use:
+
+- latest production-compatible Next.js App Router
+- React
+- TypeScript strict mode
+- Tailwind CSS
+- shadcn/ui
+- Lucide
+- selected Magic UI / Aceternity components only when justified
+- Three.js
+- React Three Fiber
+- Drei
+- GSAP + ScrollTrigger
+- Lenis
+- Motion
+- Supabase architecture for Auth/Postgres/Storage
+- Stripe payment-provider abstraction
+- Manual UPI/WhatsApp payment-provider abstraction
+- MapLibre GL JS
+- Zod
+- React Hook Form
+- Zustand where client state is appropriate
+- Playwright for E2E/visual checks
+
+Do not overengineer client state.
+
+Create architecture documents before major implementation:
+
+docs/ARCHITECTURE.md
+docs/DESIGN_SYSTEM.md
+docs/DATA_MODEL.md
+docs/MOTION_SYSTEM.md
+docs/SECURITY.md
+docs/IMPLEMENTATION_PLAN.md
+
+If existing versions exist, improve rather than blindly overwrite them.
+
+PHASE D — DESIGN DIRECTION
+
+Brand:
+Cozy_Crochets
+
+Concept:
+"The Living Yarn Store"
+
+The site must feel:
+- handmade
+- cozy
+- premium
+- tactile
+- warm
+- playful but sophisticated
+- feminine-neutral rather than excessively pink
+- product-first
+
+Proposed tokens:
+
+cream      #FFF8F1
+blush      #F1C6C0
+dustyRose  #DFA7AD
+lavender   #C9B7E8
+sage       #B8D1BF
+cocoa      #493630
+warmGold   #CDA567
+ink        #241D1A
+
+Use semantic CSS variables rather than scattering hex values.
+
+Typography:
+expressive editorial serif for display/headlines
++
+highly readable modern sans-serif for UI/body.
+
+Use next/font.
+
+Create light-first visual design.
+Dark mode is optional and should not delay the main implementation.
+
+PHASE E — MOTION PHILOSOPHY
+
+Do NOT make the entire commerce interface a WebGL application.
+
+Use one optimized R3F/Three.js hero environment.
+
+Possible visual concept:
+- yarn ball
+- crochet flower forms
+- looping thread
+- extremely subtle pointer parallax
+- softly floating yarn ornaments
+
+Use CSS/Motion for ordinary product cards.
+
+GSAP/ScrollTrigger only where cinematic scroll motion adds value.
+
+Lenis provides smooth scrolling.
+
+Implement prefers-reduced-motion.
+
+No animation should prevent:
+- clicking
+- keyboard navigation
+- scrolling
+- checkout
+- reading product information.
+
+Performance rules:
+- dynamically load 3D
+- cap DPR
+- suspend/pause animation offscreen
+- pause when document is hidden
+- avoid separate WebGL scenes per product
+- preload only essential hero resources
+- video preload=metadata
+- lazy-load below-fold product images
+- use optimized images
+- maintain minimal layout shift.
+
+PHASE F — SITE MAP
+
+Create an architecture for:
+
+/
+ /shop
+ /product/[slug]
+ /search
+ /customize
+ /cart
+ /checkout
+ /orders
+ /orders/[id]
+ /login
+ /account
+ /about
+ /contact
+ /privacy
+ /shipping
+ /returns
+
+/admin
+ /admin/dashboard
+ /admin/products
+ /admin/products/new
+ /admin/products/[id]
+ /admin/orders
+ /admin/reviews
+ /admin/custom-requests
+ /admin/banners
+ /admin/settings
+
+Use a root header/navigation across the store containing:
+
+Cozy_Crochets logo
+Home
+Shop
+Custom Crochet
+Search
+Location
+Cart + badge
+Login / Account
+
+Admin users additionally get an Admin entry.
+
+PHASE G — DATA MODEL
+
+Design Supabase migrations/schema for:
+
+profiles
+products
+product_media
+cart_items
+addresses
+orders
+order_items
+payments
+reviews
+custom_requests
+banners
+site_settings
+audit_logs
+
+Use UUIDs unless a strong reason exists otherwise.
+
+Money must be represented in integer paise, never floating-point currency.
+
+Products require:
+id
+slug
+name
+category
+short_description
+description
+price_paise
+inventory_qty
+active
+featured
+best_seller
+created_at
+updated_at
+
+Media requires:
+id
+product_id
+media_type
+slot
+storage_path/url
+alt_text
+poster_path
+sort_order
+
+Reviews:
+rating
+body
+title
+approved
+verified_purchase
+user_id
+product_id
+
+Set up the architecture for Row Level Security.
+
+Public:
+read active products
+read approved reviews
+read active public banners
+
+Authenticated customer:
+modify their own address/cart/profile
+read their own orders
+create eligible reviews
+create customization requests
+
+Admin:
+authorized CRUD only through securely validated admin privileges.
+
+Never put a Supabase service-role secret in browser code.
+
+PHASE H — INITIAL CATALOG
+
+Detect these folders and create display mappings:
+
+Bag       -> Crochet Bag
+Boque     -> Crochet Bouquet
+HeadBands -> Crochet Headbands
+Key_Ring  -> Crochet Key Ring
+Kid_Shoe  -> Crochet Kid Shoes
+Rose      -> Crochet Rose
+Sunflower -> Crochet Sunflower
+
+Do not invent final commercial prices, quantities or factual product
+descriptions.
+
+Create clearly marked development placeholders where data is unknown.
+Make all of them easy to edit later from admin.
+
+PHASE I — INSTALLATION
+
+Inspect package.json first.
+
+Install only dependencies actually needed.
+
+Use the existing package manager when detectable.
+
+After installation run:
+lint
+typecheck
+tests if present
+production build
+
+Fix failures rather than suppressing them.
+
+Create .env.example containing names only, never real secrets.
+
+Likely configuration includes:
+
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+
+STRIPE_SECRET_KEY=
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+STRIPE_WEBHOOK_SECRET=
+
+NEXT_PUBLIC_SITE_URL=
+
+appropriate map/geocoder environment variables
+
+WHATSAPP_NUMBER=
+CONTACT_EMAIL=
+INSTAGRAM_URL=
+UPI_ID=
+
+Never commit .env.local.
+
+PHASE J — HIGGSFIELD
+
+Inspect available Higgsfield MCP tools/presets/models.
+
+Develop an art-direction plan for:
+- yarn-ball hero
+- subtle crochet flower ornaments
+- one neutral hero environment
+- optional festival-banner templates
+
+Do not spend/generate unnecessarily without first determining what assets
+actually improve the implementation.
+
+Do not modify real product identity.
+
+PHASE K — OUTPUT
+
+Before ending this phase:
+
+1. Architecture documentation must exist.
+2. Design tokens must exist.
+3. App must scaffold successfully.
+4. Local product media must be inventoried.
+5. Media manifest generation must work.
+6. Core routing/layout must compile.
+7. Header/footer shell must exist.
+8. Supabase schema/migrations must be prepared.
+9. Environment template must exist.
+10. npm run build (or equivalent) must succeed.
+
+At the end, provide me:
+
+- what you inspected
+- skill files you used
+- MCPs you used
+- dependencies installed
+- files created/changed
+- architecture decisions
+- exact commands to run the local app
+- unresolved credentials/external services
+- any blockers
+
+Do not continue to deployment yet.
+Stop after foundation/architecture is stable.
+

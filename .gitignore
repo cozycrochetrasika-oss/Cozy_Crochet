@@ -1,0 +1,40 @@
+# --- Dependencies ---
+node_modules/
+
+# --- Environment & secrets (never commit) ---
+.env
+.env.local
+.env*.local
+.env.production
+*.pem
+*.key
+
+# --- Build output ---
+.next/
+out/
+dist/
+build/
+.netlify/
+
+# --- App caches / logs ---
+*.log
+npm-debug.log*
+.pnpm-debug.log*
+*.tsbuildinfo
+.DS_Store
+Thumbs.db
+
+# --- IDE / editor ---
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# --- Tests / QA artifacts ---
+test-results/
+playwright-report/
+blob-report/
+screenshots/
+
+# --- Misc runtime data ---
+coverage/
+.vercel/

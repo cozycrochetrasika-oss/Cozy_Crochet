@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Raw Palette Tokens */
+    --color-cream: #FFF8F1;
+    --color-blush: #F1C6C0;
+    --color-dusty-rose: #DFA7AD;
+    --color-lavender: #C9B7E8;
+    --color-sage: #B8D1BF;
+    --color-cocoa: #493630;
+    --color-warm-gold: #CDA567;
+    --color-ink: #241D1A;
+
+    /* Semantic UI Tokens */
+    --bg: var(--color-cream);
+    --surface: #FFFFFF;
+    --surface-raised: #FFFDF9;
+    --surface-muted: #F9EFE6;
+
+    --fg: var(--color-ink);
+    --fg-muted: var(--color-cocoa);
+    --fg-subtle: #735F58;
+    --fg-on-accent: #FFFFFF;
+
+    --border: rgba(73, 54, 48, 0.12);
+    --border-strong: rgba(73, 54, 48, 0.24);
+
+    --accent: var(--color-dusty-rose);
+    --accent-hover: #D2959C;
+    --accent-soft: rgba(223, 167, 173, 0.18);
+
+    --success: var(--color-sage);
+    --warning: var(--color-warm-gold);
+    --danger: #D9534F;
+
+    /* Elevations */
+    --shadow-sm: 0 1px 3px rgba(36, 29, 26, 0.05);
+    --shadow-md: 0 6px 16px -4px rgba(36, 29, 26, 0.08), 0 2px 6px -2px rgba(36, 29, 26, 0.04);
+    --shadow-lg: 0 16px 36px -8px rgba(36, 29, 26, 0.12);
+    --shadow-yarn: 0 12px 32px -4px rgba(223, 167, 173, 0.25);
+
+    /* Radii */
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-full: 9999px;
+  }
+
+  html {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: auto; /* Managed by Lenis */
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Accessible focus indicators */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* Numerical tabular figures */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Lenis scroll styles */
+  html.lenis, html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  .lenis.lenis-scrolling iframe {
+    pointer-events: none;
+  }
+
+  /* Prefers Reduced Motion override */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

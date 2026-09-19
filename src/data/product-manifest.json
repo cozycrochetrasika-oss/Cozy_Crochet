@@ -1,0 +1,563 @@
+[
+  {
+    "id": "prod_crochet_bag",
+    "slug": "crochet-bag",
+    "folderName": "Bag",
+    "name": "Crochet Bag",
+    "category": "Bags",
+    "shortDescription": "Handcrafted woven crochet tote bag with durable stitch design and natural texture.",
+    "description": "An artisanal handmade crochet shoulder bag woven from resilient, premium cotton yarn. Features a reinforced base, comfortable drop handles, and an intricate open-weave texture suited for everyday elegance, farmers markets, or seaside strolls.",
+    "pricePaise": 149900,
+    "inventoryQty": 14,
+    "rating": 4.8,
+    "reviewCount": 38,
+    "soldCount": 142,
+    "active": true,
+    "featured": true,
+    "bestSeller": true,
+    "media": [
+      {
+        "id": "crochet-bag-main-1",
+        "mediaType": "image",
+        "slot": "main",
+        "filename": "main.png",
+        "relativePath": "Bag/main.png",
+        "publicUrl": "/products/Bag/main.png",
+        "altText": "Crochet Bag - Front view",
+        "sortOrder": 1
+      },
+      {
+        "id": "crochet-bag-video-2",
+        "mediaType": "video",
+        "slot": "video",
+        "filename": "Video.mp4",
+        "relativePath": "Bag/Video.mp4",
+        "publicUrl": "/products/Bag/Video.mp4",
+        "altText": "Crochet Bag - Product showcase video",
+        "posterUrl": "/products/Bag/main.png",
+        "sortOrder": 2
+      },
+      {
+        "id": "crochet-bag-single-3",
+        "mediaType": "image",
+        "slot": "single",
+        "filename": "Single.png",
+        "relativePath": "Bag/Single.png",
+        "publicUrl": "/products/Bag/Single.png",
+        "altText": "Crochet Bag - Single piece detail",
+        "sortOrder": 3
+      },
+      {
+        "id": "crochet-bag-bundle-4",
+        "mediaType": "image",
+        "slot": "bundle",
+        "filename": "Bundle.png",
+        "relativePath": "Bag/Bundle.png",
+        "publicUrl": "/products/Bag/Bundle.png",
+        "altText": "Crochet Bag - Set bundle presentation",
+        "sortOrder": 4
+      },
+      {
+        "id": "crochet-bag-extra-5",
+        "mediaType": "image",
+        "slot": "extra",
+        "filename": "Gemini_Generated_Image_ewok6gewok6gewok.png",
+        "relativePath": "Bag/Gemini_Generated_Image_ewok6gewok6gewok.png",
+        "publicUrl": "/products/Bag/Gemini_Generated_Image_ewok6gewok6gewok.png",
+        "altText": "Crochet Bag - Handcrafted detail",
+        "sortOrder": 5
+      },
+      {
+        "id": "crochet-bag-extra-6",
+        "mediaType": "image",
+        "slot": "extra",
+        "filename": "Gemini_Generated_Image_twukz9twukz9twuk.png",
+        "relativePath": "Bag/Gemini_Generated_Image_twukz9twukz9twuk.png",
+        "publicUrl": "/products/Bag/Gemini_Generated_Image_twukz9twukz9twuk.png",
+        "altText": "Crochet Bag - Handcrafted detail",
+        "sortOrder": 6
+      },
+      {
+        "id": "crochet-bag-extra-7",
+        "mediaType": "image",
+        "slot": "extra",
+        "filename": "Gemini_Generated_Image_yocdc2yocdc2yocd.png",
+        "relativePath": "Bag/Gemini_Generated_Image_yocdc2yocdc2yocd.png",
+        "publicUrl": "/products/Bag/Gemini_Generated_Image_yocdc2yocdc2yocd.png",
+        "altText": "Crochet Bag - Handcrafted detail",
+        "sortOrder": 7
+      }
+    ]
+  },
+  {
+    "id": "prod_crochet_bouquet",
+    "slug": "crochet-bouquet",
+    "folderName": "Boque",
+    "name": "Crochet Bouquet",
+    "category": "Bouquets",
+    "shortDescription": "Everlasting floral bouquet handmade with soft milk cotton yarn and botanical stems.",
+    "description": "A breathtaking everlasting floral bouquet crafted by hand with premium milk cotton yarn. Composed of delicate crochet roses, daisies, and lavender foliage wrapped in vintage craft paper with a satin ribbon. Never withers, forever in bloom.",
+    "pricePaise": 199900,
+    "inventoryQty": 8,
+    "rating": 4.9,
+    "reviewCount": 52,
+    "soldCount": 96,
+    "active": true,
+    "featured": true,
+    "bestSeller": true,
+    "media": [
+      {
+        "id": "crochet-bouquet-main-1",
+        "mediaType": "image",
+        "slot": "main",
+        "filename": "main.png",
+        "relativePath": "Boque/main.png",
+        "publicUrl": "/products/Boque/main.png",
+        "altText": "Crochet Bouquet - Front view",
+        "sortOrder": 1
+      },
+      {
+        "id": "crochet-bouquet-video-2",
+        "mediaType": "video",
+        "slot": "video",
+        "filename": "Video.mp4",
+        "relativePath": "Boque/Video.mp4",
+        "publicUrl": "/products/Boque/Video.mp4",
+        "altText": "Crochet Bouquet - Product showcase video",
+        "posterUrl": "/products/Boque/main.png",
+        "sortOrder": 2
+      },
+      {
+        "id": "crochet-bouquet-single-3",
+        "mediaType": "image",
+        "slot": "single",
+        "filename": "Single.png",
+        "relativePath": "Boque/Single.png",
+        "publicUrl": "/products/Boque/Single.png",
+        "altText": "Crochet Bouquet - Single piece detail",
+        "sortOrder": 3
+      },
+      {
+        "id": "crochet-bouquet-bundle-4",
+        "mediaType": "image",
+        "slot": "bundle",
+        "filename": "Bundle.png",
+        "relativePath": "Boque/Bundle.png",
+        "publicUrl": "/products/Boque/Bundle.png",
+        "altText": "Crochet Bouquet - Set bundle presentation",
+        "sortOrder": 4
+      },
+      {
+        "id": "crochet-bouquet-extra-5",
+        "mediaType": "image",
+        "slot": "extra",
+        "filename": "Gemini_Generated_Image_9oelqa9oelqa9oel.png",
+        "relativePath": "Boque/Gemini_Generated_Image_9oelqa9oelqa9oel.png",
+        "publicUrl": "/products/Boque/Gemini_Generated_Image_9oelqa9oelqa9oel.png",
+        "altText": "Crochet Bouquet - Handcrafted detail",
+        "sortOrder": 5
+      }
+    ]
+  },
+  {
+    "id": "prod_crochet_headbands",
+    "slug": "crochet-headbands",
+    "folderName": "HeadBands",
+    "name": "Crochet Headbands",
+    "category": "Accessories",
+    "shortDescription": "Delicate and elastic crochet headbands made for comfort, softness, and vintage charm.",
+    "description": "Soft, stretchable, and gentle on the scalp, our handmade crochet headbands provide effortless vintage aesthetic and snug all-day comfort. Crocheted from breathable organic yarn in seasonal earthy pastels.",
+    "pricePaise": 49900,
+    "inventoryQty": 24,
+    "rating": 4.7,
+    "reviewCount": 29,
+    "soldCount": 215,
+    "active": true,
+    "featured": false,
+    "bestSeller": false,
+    "media": [
+      {
+        "id": "crochet-headbands-main-1",
+        "mediaType": "image",
+        "slot": "main",
+        "filename": "main.jpeg",
+        "relativePath": "HeadBands/main.jpeg",
+        "publicUrl": "/products/HeadBands/main.jpeg",
+        "altText": "Crochet Headbands - Front view",
+        "sortOrder": 1
+      },
+      {
+        "id": "crochet-headbands-video-2",
+        "mediaType": "video",
+        "slot": "video",
+        "filename": "Video.mp4",
+        "relativePath": "HeadBands/Video.mp4",
+        "publicUrl": "/products/HeadBands/Video.mp4",
+        "altText": "Crochet Headbands - Product showcase video",
+        "posterUrl": "/products/HeadBands/main.jpeg",
+        "sortOrder": 2
+      },
+      {
+        "id": "crochet-headbands-single-3",
+        "mediaType": "image",
+        "slot": "single",
+        "filename": "Single.jpeg",
+        "relativePath": "HeadBands/Single.jpeg",
+        "publicUrl": "/products/HeadBands/Single.jpeg",
+        "altText": "Crochet Headbands - Single piece detail",
+        "sortOrder": 3
+      },
+      {
+        "id": "crochet-headbands-bundle-4",
+        "mediaType": "image",
+        "slot": "bundle",
+        "filename": "Bundle.jpeg",
+        "relativePath": "HeadBands/Bundle.jpeg",
+        "publicUrl": "/products/HeadBands/Bundle.jpeg",
+        "altText": "Crochet Headbands - Set bundle presentation",
+        "sortOrder": 4
+      }
+    ]
+  },
+  {
+    "id": "prod_crochet_key_ring",
+    "slug": "crochet-key-ring",
+    "folderName": "Key_Ring",
+    "name": "Crochet Key Ring",
+    "category": "Keyrings",
+    "shortDescription": "Cute miniature crochet charms and keychains handmade with delightful detail.",
+    "description": "Miniature crochet treasures handcrafted with micro-stitch precision. Equipped with a sturdy antique brass clasp, ideal for keys, backpacks, or handbags. Lightweight, tactile, and heartwarming.",
+    "pricePaise": 29900,
+    "inventoryQty": 45,
+    "rating": 4.9,
+    "reviewCount": 64,
+    "soldCount": 420,
+    "active": true,
+    "featured": false,
+    "bestSeller": true,
+    "media": [
+      {
+        "id": "crochet-key-ring-main-1",
+        "mediaType": "image",
+        "slot": "main",
+        "filename": "main.png",
+        "relativePath": "Key_Ring/main.png",
+        "publicUrl": "/products/Key_Ring/main.png",
+        "altText": "Crochet Key Ring - Front view",
+        "sortOrder": 1
+      },
+      {
+        "id": "crochet-key-ring-video-2",
+        "mediaType": "video",
+        "slot": "video",
+        "filename": "Video.mp4",
+        "relativePath": "Key_Ring/Video.mp4",
+        "publicUrl": "/products/Key_Ring/Video.mp4",
+        "altText": "Crochet Key Ring - Product showcase video",
+        "posterUrl": "/products/Key_Ring/main.png",
+        "sortOrder": 2
+      },
+      {
+        "id": "crochet-key-ring-single-3",
+        "mediaType": "image",
+        "slot": "single",
+        "filename": "Single.png",
+        "relativePath": "Key_Ring/Single.png",
+        "publicUrl": "/products/Key_Ring/Single.png",
+        "altText": "Crochet Key Ring - Single piece detail",
+        "sortOrder": 3
+      },
+      {
+        "id": "crochet-key-ring-bundle-4",
+        "mediaType": "image",
+        "slot": "bundle",
+        "filename": "Bundle.png",
+        "relativePath": "Key_Ring/Bundle.png",
+        "publicUrl": "/products/Key_Ring/Bundle.png",
+        "altText": "Crochet Key Ring - Set bundle presentation",
+        "sortOrder": 4
+      },
+      {
+        "id": "crochet-key-ring-extra-5",
+        "mediaType": "image",
+        "slot": "extra",
+        "filename": "Bundle2.png",
+        "relativePath": "Key_Ring/Bundle2.png",
+        "publicUrl": "/products/Key_Ring/Bundle2.png",
+        "altText": "Crochet Key Ring - Handcrafted detail",
+        "sortOrder": 5
+      },
+      {
+        "id": "crochet-key-ring-extra-6",
+        "mediaType": "image",
+        "slot": "extra",
+        "filename": "Gemini_Generated_Image_iec0h5iec0h5iec0.png",
+        "relativePath": "Key_Ring/Gemini_Generated_Image_iec0h5iec0h5iec0.png",
+        "publicUrl": "/products/Key_Ring/Gemini_Generated_Image_iec0h5iec0h5iec0.png",
+        "altText": "Crochet Key Ring - Handcrafted detail",
+        "sortOrder": 6
+      },
+      {
+        "id": "crochet-key-ring-extra-7",
+        "mediaType": "image",
+        "slot": "extra",
+        "filename": "key (4).jpeg",
+        "relativePath": "Key_Ring/key (4).jpeg",
+        "publicUrl": "/products/Key_Ring/key%20(4).jpeg",
+        "altText": "Crochet Key Ring - Handcrafted detail",
+        "sortOrder": 7
+      },
+      {
+        "id": "crochet-key-ring-extra-8",
+        "mediaType": "image",
+        "slot": "extra",
+        "filename": "KeyBundle.png",
+        "relativePath": "Key_Ring/KeyBundle.png",
+        "publicUrl": "/products/Key_Ring/KeyBundle.png",
+        "altText": "Crochet Key Ring - Handcrafted detail",
+        "sortOrder": 8
+      }
+    ]
+  },
+  {
+    "id": "prod_crochet_kid_shoes",
+    "slug": "crochet-kid-shoes",
+    "folderName": "Kid_Shoe",
+    "name": "Crochet Kid Shoes",
+    "category": "Footwear",
+    "shortDescription": "Ultra-soft baby booties crafted with hypoallergenic organic baby yarn for tiny toes.",
+    "description": "Tender handmade crochet booties for newborns and toddlers. Crafted with certified hypoallergenic baby-grade yarn, flexible ribbing to stay securely on active feet, and seamless toe boxes to prevent irritation.",
+    "pricePaise": 89900,
+    "inventoryQty": 18,
+    "rating": 4.8,
+    "reviewCount": 33,
+    "soldCount": 110,
+    "active": true,
+    "featured": true,
+    "bestSeller": false,
+    "media": [
+      {
+        "id": "crochet-kid-shoes-main-1",
+        "mediaType": "image",
+        "slot": "main",
+        "filename": "main.jpeg",
+        "relativePath": "Kid_Shoe/main.jpeg",
+        "publicUrl": "/products/Kid_Shoe/main.jpeg",
+        "altText": "Crochet Kid Shoes - Front view",
+        "sortOrder": 1
+      },
+      {
+        "id": "crochet-kid-shoes-video-2",
+        "mediaType": "video",
+        "slot": "video",
+        "filename": "Video.mp4",
+        "relativePath": "Kid_Shoe/Video.mp4",
+        "publicUrl": "/products/Kid_Shoe/Video.mp4",
+        "altText": "Crochet Kid Shoes - Product showcase video",
+        "posterUrl": "/products/Kid_Shoe/main.jpeg",
+        "sortOrder": 2
+      },
+      {
+        "id": "crochet-kid-shoes-single-3",
+        "mediaType": "image",
+        "slot": "single",
+        "filename": "Single.jpeg",
+        "relativePath": "Kid_Shoe/Single.jpeg",
+        "publicUrl": "/products/Kid_Shoe/Single.jpeg",
+        "altText": "Crochet Kid Shoes - Single piece detail",
+        "sortOrder": 3
+      },
+      {
+        "id": "crochet-kid-shoes-bundle-4",
+        "mediaType": "image",
+        "slot": "bundle",
+        "filename": "Bundle.jpeg",
+        "relativePath": "Kid_Shoe/Bundle.jpeg",
+        "publicUrl": "/products/Kid_Shoe/Bundle.jpeg",
+        "altText": "Crochet Kid Shoes - Set bundle presentation",
+        "sortOrder": 4
+      },
+      {
+        "id": "crochet-kid-shoes-extra-5",
+        "mediaType": "image",
+        "slot": "extra",
+        "filename": "Mix.jpeg",
+        "relativePath": "Kid_Shoe/Mix.jpeg",
+        "publicUrl": "/products/Kid_Shoe/Mix.jpeg",
+        "altText": "Crochet Kid Shoes - Handcrafted detail",
+        "sortOrder": 5
+      },
+      {
+        "id": "crochet-kid-shoes-extra-6",
+        "mediaType": "image",
+        "slot": "extra",
+        "filename": "Mutlicolor.jpeg",
+        "relativePath": "Kid_Shoe/Mutlicolor.jpeg",
+        "publicUrl": "/products/Kid_Shoe/Mutlicolor.jpeg",
+        "altText": "Crochet Kid Shoes - Handcrafted detail",
+        "sortOrder": 6
+      },
+      {
+        "id": "crochet-kid-shoes-extra-7",
+        "mediaType": "image",
+        "slot": "extra",
+        "filename": "purple.jpeg",
+        "relativePath": "Kid_Shoe/purple.jpeg",
+        "publicUrl": "/products/Kid_Shoe/purple.jpeg",
+        "altText": "Crochet Kid Shoes - Handcrafted detail",
+        "sortOrder": 7
+      },
+      {
+        "id": "crochet-kid-shoes-extra-8",
+        "mediaType": "video",
+        "slot": "extra",
+        "filename": "Video2.mp4",
+        "relativePath": "Kid_Shoe/Video2.mp4",
+        "publicUrl": "/products/Kid_Shoe/Video2.mp4",
+        "altText": "Crochet Kid Shoes - Handcrafted detail",
+        "posterUrl": "/products/Kid_Shoe/main.jpeg",
+        "sortOrder": 8
+      }
+    ]
+  },
+  {
+    "id": "prod_crochet_rose",
+    "slug": "crochet-rose",
+    "folderName": "Rose",
+    "name": "Crochet Rose",
+    "category": "Flowers",
+    "shortDescription": "Timeless single stem crochet red rose with detailed leaf and sculpted petals.",
+    "description": "A romantic, everlasting crochet red rose featuring velvety petals, green calyx, and a flexible wrapped wire stem. Perfect for keepsakes, anniversaries, or bedside decor.",
+    "pricePaise": 34900,
+    "inventoryQty": 32,
+    "rating": 4.9,
+    "reviewCount": 78,
+    "soldCount": 350,
+    "active": true,
+    "featured": true,
+    "bestSeller": true,
+    "media": [
+      {
+        "id": "crochet-rose-main-1",
+        "mediaType": "image",
+        "slot": "main",
+        "filename": "main.png",
+        "relativePath": "Rose/main.png",
+        "publicUrl": "/products/Rose/main.png",
+        "altText": "Crochet Rose - Front view",
+        "sortOrder": 1
+      },
+      {
+        "id": "crochet-rose-video-2",
+        "mediaType": "video",
+        "slot": "video",
+        "filename": "Video.mp4",
+        "relativePath": "Rose/Video.mp4",
+        "publicUrl": "/products/Rose/Video.mp4",
+        "altText": "Crochet Rose - Product showcase video",
+        "posterUrl": "/products/Rose/main.png",
+        "sortOrder": 2
+      },
+      {
+        "id": "crochet-rose-single-3",
+        "mediaType": "image",
+        "slot": "single",
+        "filename": "Single.jpeg",
+        "relativePath": "Rose/Single.jpeg",
+        "publicUrl": "/products/Rose/Single.jpeg",
+        "altText": "Crochet Rose - Single piece detail",
+        "sortOrder": 3
+      },
+      {
+        "id": "crochet-rose-bundle-4",
+        "mediaType": "image",
+        "slot": "bundle",
+        "filename": "Bundle.png",
+        "relativePath": "Rose/Bundle.png",
+        "publicUrl": "/products/Rose/Bundle.png",
+        "altText": "Crochet Rose - Set bundle presentation",
+        "sortOrder": 4
+      },
+      {
+        "id": "crochet-rose-extra-5",
+        "mediaType": "image",
+        "slot": "extra",
+        "filename": "Rose_Bundle.png",
+        "relativePath": "Rose/Rose_Bundle.png",
+        "publicUrl": "/products/Rose/Rose_Bundle.png",
+        "altText": "Crochet Rose - Handcrafted detail",
+        "sortOrder": 5
+      }
+    ]
+  },
+  {
+    "id": "prod_crochet_sunflower",
+    "slug": "crochet-sunflower",
+    "folderName": "Sunflower",
+    "name": "Crochet Sunflower",
+    "category": "Flowers",
+    "shortDescription": "Radiant crochet sunflower bringing everlasting warmth and sunshine to any space.",
+    "description": "Bright and cheerful handcrafted sunflower with rich cocoa-hued center disk and vibrant golden petals. Made with durable colorfast yarn to maintain warmth and brightness across seasons.",
+    "pricePaise": 39900,
+    "inventoryQty": 26,
+    "rating": 4.9,
+    "reviewCount": 45,
+    "soldCount": 280,
+    "active": true,
+    "featured": true,
+    "bestSeller": false,
+    "media": [
+      {
+        "id": "crochet-sunflower-main-1",
+        "mediaType": "image",
+        "slot": "main",
+        "filename": "main.png",
+        "relativePath": "Sunflower/main.png",
+        "publicUrl": "/products/Sunflower/main.png",
+        "altText": "Crochet Sunflower - Front view",
+        "sortOrder": 1
+      },
+      {
+        "id": "crochet-sunflower-video-2",
+        "mediaType": "video",
+        "slot": "video",
+        "filename": "Video.mp4",
+        "relativePath": "Sunflower/Video.mp4",
+        "publicUrl": "/products/Sunflower/Video.mp4",
+        "altText": "Crochet Sunflower - Product showcase video",
+        "posterUrl": "/products/Sunflower/main.png",
+        "sortOrder": 2
+      },
+      {
+        "id": "crochet-sunflower-single-3",
+        "mediaType": "image",
+        "slot": "single",
+        "filename": "Single.png",
+        "relativePath": "Sunflower/Single.png",
+        "publicUrl": "/products/Sunflower/Single.png",
+        "altText": "Crochet Sunflower - Single piece detail",
+        "sortOrder": 3
+      },
+      {
+        "id": "crochet-sunflower-bundle-4",
+        "mediaType": "image",
+        "slot": "bundle",
+        "filename": "Bundle.png",
+        "relativePath": "Sunflower/Bundle.png",
+        "publicUrl": "/products/Sunflower/Bundle.png",
+        "altText": "Crochet Sunflower - Set bundle presentation",
+        "sortOrder": 4
+      },
+      {
+        "id": "crochet-sunflower-extra-5",
+        "mediaType": "image",
+        "slot": "extra",
+        "filename": "Sunflower.jpeg",
+        "relativePath": "Sunflower/Sunflower.jpeg",
+        "publicUrl": "/products/Sunflower/Sunflower.jpeg",
+        "altText": "Crochet Sunflower - Handcrafted detail",
+        "sortOrder": 5
+      }
+    ]
+  }
+]

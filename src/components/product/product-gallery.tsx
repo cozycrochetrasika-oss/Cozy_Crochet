@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import { Maximize2, Play, Pause, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Maximize2, Play, ChevronLeft, ChevronRight } from 'lucide-react';
 import type { MediaItem } from '@/data/products';
 import { ProductLightbox } from './product-lightbox';
 
@@ -15,22 +15,69 @@ export function ProductGallery({
 }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(true);
 
   const activeMedia = media[selectedIndex] || media[0];
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setSelectedIndex((prev) => (prev + 1) % media.length);
+  }, [media.length]);
+
+  const handlePrev = useCallback(() => {
+    setSelectedIndex((prev) => (prev - 1 + media.length) % media.length);
+  }, [media.length]);
+
+  // Touch swipe support allowing horizontal media navigation while preserving vertical page scrolling
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
   };
 
-  const handlePrev = () => {
-    setSelectedIndex((prev) => (prev - 1 + media.length) % media.length);
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    const deltaY = e.changedTouches[0].clientY - touchStartY.current;
+
+    // Only switch media if gesture is predominantly horizontal
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 40) {
+      if (deltaX < 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
   };
+
+  // Keyboard navigation (ArrowLeft / ArrowRight) for gallery media
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const activeTag = (document.activeElement as HTMLElement)?.tagName;
+      if (activeTag === 'INPUT' || activeTag === 'TEXTAREA') return;
+
+      if (e.key === 'ArrowRight') {
+        handleNext();
+      } else if (e.key === 'ArrowLeft') {
+        handlePrev();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleNext, handlePrev]);
 
   return (
     <div className="flex flex-col gap-4">
       {/* Primary Display Stage */}
-      <div className="relative aspect-[4/5] w-full rounded-3xl overflow-hidden bg-cream/40 border border-border/80 shadow-sm group">
+      <div
+        className="relative aspect-[4/5] w-full rounded-3xl overflow-hidden bg-cream/40 border border-border/80 shadow-sm group select-none"
+        style={{ touchAction: 'pan-y pinch-zoom' }}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         {activeMedia?.mediaType === 'video' ? (
           <div className="relative w-full h-full bg-black flex items-center justify-center">
             <video
@@ -41,10 +88,8 @@ export function ProductGallery({
               loop
               playsInline
               className="w-full h-full object-cover"
-              onPlay={() => setIsPlaying(true)}
-              onPause={() => setIsPlaying(false)}
             />
-            {/* Video Controls overlay */}
+            {/* Video Badge */}
             <div className="absolute bottom-4 left-4 z-10 flex items-center gap-2">
               <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wider uppercase bg-black/60 text-white backdrop-blur-sm">
                 Showcase Video
@@ -58,7 +103,7 @@ export function ProductGallery({
               alt={activeMedia?.altText || productName}
               fill
               priority
-              sizes="(max-width: 1024px) 100vw, 50vw"
+              sizes="(max-width: 1024px) 100vw, 55vw"
               className="object-cover cursor-zoom-in"
               onClick={() => setLightboxOpen(true)}
             />
@@ -116,7 +161,10 @@ export function ProductGallery({
 
       {/* Horizontal Thumbnail Strip */}
       {media.length > 1 && (
-        <div className="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-none pt-1">
+        <div
+          className="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-none pt-1"
+          style={{ touchAction: 'pan-x' }}
+        >
           {media.map((item, idx) => {
             const isSelected = idx === selectedIndex;
             return (

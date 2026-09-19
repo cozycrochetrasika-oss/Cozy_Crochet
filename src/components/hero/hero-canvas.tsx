@@ -4,16 +4,17 @@ import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-// Procedural Yarn Ball Core
+// Procedural Pearl-White Yarn Ball with Powder-Blue Thread Strands
 function YarnBall() {
   const meshRef = useRef<THREE.Mesh>(null);
   const threadRef = useRef<THREE.LineSegments>(null);
+  const accentThreadRef = useRef<THREE.LineSegments>(null);
 
-  // Generate winding yarn thread coordinates
+  // Primary winding thread coordinates
   const threadGeometry = useMemo(() => {
     const points: THREE.Vector3[] = [];
-    const numLoops = 280;
-    const radius = 1.35;
+    const numLoops = 300;
+    const radius = 1.34;
 
     for (let i = 0; i < numLoops; i++) {
       const phi = Math.acos(-1 + (2 * i) / numLoops);
@@ -24,56 +25,86 @@ function YarnBall() {
 
       points.push(new THREE.Vector3(x, y, z));
       if (i > 0) {
-        // Line segment between consecutive points
         points.push(new THREE.Vector3(x, y, z));
       }
     }
-    // Remove last duplicate if odd
-    if (points.length % 2 !== 0) {
-      points.pop();
-    }
-
-    const geom = new THREE.BufferGeometry().setFromPoints(points);
-    return geom;
+    if (points.length % 2 !== 0) points.pop();
+    return new THREE.BufferGeometry().setFromPoints(points);
   }, []);
 
-  useFrame((state, delta) => {
+  // Secondary subtle accent thread (soft sky blue)
+  const accentThreadGeometry = useMemo(() => {
+    const points: THREE.Vector3[] = [];
+    const numLoops = 140;
+    const radius = 1.36;
+
+    for (let i = 0; i < numLoops; i++) {
+      const phi = Math.acos(-1 + (2 * i) / numLoops);
+      const theta = Math.sqrt(numLoops * Math.PI * 1.5) * phi;
+      const x = radius * Math.cos(theta) * Math.sin(phi);
+      const y = radius * Math.sin(theta) * Math.sin(phi);
+      const z = radius * Math.cos(phi);
+
+      points.push(new THREE.Vector3(x, y, z));
+      if (i > 0) points.push(new THREE.Vector3(x, y, z));
+    }
+    if (points.length % 2 !== 0) points.pop();
+    return new THREE.BufferGeometry().setFromPoints(points);
+  }, []);
+
+  useFrame((_, delta) => {
     if (meshRef.current) {
-      meshRef.current.rotation.y += delta * 0.15;
-      meshRef.current.rotation.x += delta * 0.05;
+      meshRef.current.rotation.y += delta * 0.08;
+      meshRef.current.rotation.x += delta * 0.03;
     }
     if (threadRef.current) {
-      threadRef.current.rotation.y += delta * 0.15;
-      threadRef.current.rotation.x += delta * 0.05;
+      threadRef.current.rotation.y += delta * 0.08;
+      threadRef.current.rotation.x += delta * 0.03;
+    }
+    if (accentThreadRef.current) {
+      accentThreadRef.current.rotation.y -= delta * 0.05;
+      accentThreadRef.current.rotation.z += delta * 0.02;
     }
   });
 
   return (
     <group position={[0, 0, 0]}>
-      {/* Inner tactile yarn core */}
+      {/* Tactile Pearl-White Yarn Core */}
       <mesh ref={meshRef}>
-        <sphereGeometry args={[1.3, 32, 32]} />
+        <sphereGeometry args={[1.3, 36, 36]} />
         <meshStandardMaterial
-          color="#DFA7AD" // Dusty Rose brand token
-          roughness={0.85}
-          metalness={0.05}
+          color="#FFFFFF"
+          roughness={0.92}
+          metalness={0.02}
         />
       </mesh>
 
-      {/* Looping winding thread strands */}
+      {/* Primary Powder-Blue Thread Strands */}
       <lineSegments ref={threadRef} geometry={threadGeometry}>
-        <lineBasicMaterial color="#FFF8F1" linewidth={1.5} transparent opacity={0.65} />
+        <lineBasicMaterial color="#CEEAFE" linewidth={1.5} transparent opacity={0.85} />
+      </lineSegments>
+
+      {/* Delicate Sky-Blue Accent Thread */}
+      <lineSegments ref={accentThreadRef} geometry={accentThreadGeometry}>
+        <lineBasicMaterial color="#7BC9EE" linewidth={1} transparent opacity={0.6} />
       </lineSegments>
     </group>
   );
 }
 
-// Crochet Flower Petals Framing
-function CrochetFlower({ position, scale = 1, rotationSpeed = 0.2, color = '#F1C6C0' }: {
+// Pastel-Blue & Soft Accent Crochet Flower
+function CrochetFlower({
+  position,
+  scale = 1,
+  rotationSpeed = 0.12,
+  petalColor = '#A9DDF8',
+  centerColor = '#D8B875',
+}: {
   position: [number, number, number];
   scale?: number;
   rotationSpeed?: number;
-  color?: string;
+  petalColor?: string;
+  centerColor?: string;
 }) {
   const groupRef = useRef<THREE.Group>(null);
 
@@ -94,35 +125,73 @@ function CrochetFlower({ position, scale = 1, rotationSpeed = 0.2, color = '#F1C
 
   return (
     <group ref={groupRef} position={position} scale={scale}>
-      {/* Flower Center Disc */}
+      {/* Flower Center Disc (Tiny Warm Gold Accent) */}
       <mesh position={[0, 0, 0.05]}>
-        <cylinderGeometry args={[0.25, 0.25, 0.1, 16]} />
-        <meshStandardMaterial color="#CDA567" roughness={0.7} />
+        <cylinderGeometry args={[0.22, 0.22, 0.08, 16]} />
+        <meshStandardMaterial color={centerColor} roughness={0.65} />
       </mesh>
       {/* 5 Petals */}
       {petals.map((p, idx) => (
         <mesh key={idx} position={[p.px, p.py, 0]} rotation={[0, 0, p.angle]}>
-          <boxGeometry args={[0.55, 0.35, 0.08]} />
-          <meshStandardMaterial color={color} roughness={0.8} />
+          <boxGeometry args={[0.55, 0.35, 0.07]} />
+          <meshStandardMaterial color={petalColor} roughness={0.85} />
         </mesh>
       ))}
     </group>
   );
 }
 
-// Floating Soft Yarn Ornaments / Particles
+// Translucent Floating Glass / Soap Bubbles
+function TranslucentBubbles() {
+  const bubbles = useMemo(() => [
+    { position: [-1.4, -1.3, 0.8] as [number, number, number], scale: 0.38, speed: 0.6 },
+    { position: [1.8, 1.4, 0.5] as [number, number, number], scale: 0.44, speed: 0.5 },
+    { position: [2.2, -0.4, 1.1] as [number, number, number], scale: 0.28, speed: 0.8 },
+    { position: [-2.0, 0.5, 0.3] as [number, number, number], scale: 0.32, speed: 0.7 },
+  ], []);
+
+  const groupRef = useRef<THREE.Group>(null);
+
+  useFrame((state) => {
+    if (groupRef.current) {
+      const time = state.clock.getElapsedTime();
+      groupRef.current.children.forEach((child, i) => {
+        child.position.y += Math.sin(time * bubbles[i].speed + i) * 0.0015;
+      });
+    }
+  });
+
+  return (
+    <group ref={groupRef}>
+      {bubbles.map((b, idx) => (
+        <mesh key={idx} position={b.position} scale={b.scale}>
+          <sphereGeometry args={[1, 24, 24]} />
+          <meshStandardMaterial
+            color="#E5F4FF"
+            roughness={0.1}
+            metalness={0.05}
+            transparent
+            opacity={0.42}
+          />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+// Drifting Pastel Yarn Motes
 function FloatingOrnaments() {
-  const count = 35;
+  const count = 38;
   const particles = useMemo(() => {
     const temp: { position: [number, number, number]; scale: number; speed: number; color: string }[] = [];
-    const colors = ['#FFF8F1', '#F1C6C0', '#DFA7AD', '#C9B7E8', '#B8D1BF'];
+    const colors = ['#FFFFFF', '#E5F4FF', '#CEEAFE', '#A9DDF8', '#DCCFF4', '#F5D5DC', '#D9F0E5'];
 
     for (let i = 0; i < count; i++) {
-      const x = (Math.random() - 0.5) * 8;
-      const y = (Math.random() - 0.5) * 6;
-      const z = (Math.random() - 0.5) * 4 - 1;
-      const scale = 0.06 + Math.random() * 0.08;
-      const speed = 0.2 + Math.random() * 0.4;
+      const x = (Math.random() - 0.5) * 8.5;
+      const y = (Math.random() - 0.5) * 6.5;
+      const z = (Math.random() - 0.5) * 4 - 0.5;
+      const scale = 0.05 + Math.random() * 0.07;
+      const speed = 0.15 + Math.random() * 0.3;
       const color = colors[Math.floor(Math.random() * colors.length)];
       temp.push({ position: [x, y, z], scale, speed, color });
     }
@@ -136,7 +205,7 @@ function FloatingOrnaments() {
       const time = state.clock.getElapsedTime();
       groupRef.current.children.forEach((child, index) => {
         const p = particles[index];
-        child.position.y += Math.sin(time * p.speed + index) * 0.003;
+        child.position.y += Math.sin(time * p.speed + index) * 0.002;
       });
     }
   });
@@ -146,22 +215,21 @@ function FloatingOrnaments() {
       {particles.map((p, idx) => (
         <mesh key={idx} position={p.position} scale={p.scale}>
           <sphereGeometry args={[1, 12, 12]} />
-          <meshStandardMaterial color={p.color} roughness={0.9} transparent opacity={0.7} />
+          <meshStandardMaterial color={p.color} roughness={0.9} transparent opacity={0.65} />
         </mesh>
       ))}
     </group>
   );
 }
 
-// Camera Rig with Subtle Pointer Parallax
+// Camera Rig with Subtle Parallax
 function CameraRig() {
   useFrame((state) => {
-    // Subtle pointer parallax (clamped to ±0.3 rads)
-    const targetX = (state.pointer.x * 0.4);
-    const targetY = (state.pointer.y * 0.3);
+    const targetX = state.pointer.x * 0.28;
+    const targetY = state.pointer.y * 0.22;
 
-    state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, targetX, 0.05);
-    state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, targetY, 0.05);
+    state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, targetX, 0.04);
+    state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, targetY, 0.04);
     state.camera.lookAt(0, 0, 0);
   });
 
@@ -176,14 +244,17 @@ export function HeroCanvasInner() {
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       style={{ pointerEvents: 'none' }}
     >
-      <ambientLight intensity={1.1} />
-      <directionalLight position={[4, 5, 4]} intensity={1.5} color="#FFF8F1" />
-      <directionalLight position={[-4, -2, -2]} intensity={0.6} color="#C9B7E8" />
-      <pointLight position={[0, 2, 2]} intensity={0.8} color="#FFF8F1" />
+      <ambientLight intensity={1.2} />
+      <directionalLight position={[4, 5, 4]} intensity={1.4} color="#FFFFFF" />
+      <directionalLight position={[-4, -2, -2]} intensity={0.7} color="#CEEAFE" />
+      <pointLight position={[0, 2, 2.5]} intensity={0.9} color="#E5F4FF" />
 
+      {/* Depth Layering: Foreground, Main, Midground, Background */}
       <YarnBall />
-      <CrochetFlower position={[-2.2, 1.2, -0.5]} scale={0.9} rotationSpeed={0.15} color="#F1C6C0" />
-      <CrochetFlower position={[2.1, -1.1, -0.3]} scale={0.8} rotationSpeed={-0.12} color="#C9B7E8" />
+      <CrochetFlower position={[-2.2, 1.2, -0.4]} scale={0.9} rotationSpeed={0.08} petalColor="#A9DDF8" centerColor="#D8B875" />
+      <CrochetFlower position={[2.2, -1.0, -0.3]} scale={0.82} rotationSpeed={-0.07} petalColor="#CEEAFE" centerColor="#DCCFF4" />
+      <CrochetFlower position={[-1.6, -1.5, -0.6]} scale={0.65} rotationSpeed={0.06} petalColor="#D9F0E5" centerColor="#F5D5DC" />
+      <TranslucentBubbles />
       <FloatingOrnaments />
       <CameraRig />
     </Canvas>

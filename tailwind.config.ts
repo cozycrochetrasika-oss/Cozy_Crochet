@@ -10,15 +10,41 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Raw Cozy_Crochets Brand Tokens
-        cream: '#FFF8F1',
-        blush: '#F1C6C0',
-        dustyRose: '#DFA7AD',
-        lavender: '#C9B7E8',
-        sage: '#B8D1BF',
-        cocoa: '#493630',
-        warmGold: '#CDA567',
-        ink: '#241D1A',
+        // New White + Light Blue System Tokens
+        white: '#FFFFFF',
+        'background-soft': 'var(--background-soft)',
+        'surface-blue': 'var(--surface-blue)',
+
+        blue: {
+          50: '#F3FAFF',
+          100: '#E5F4FF',
+          200: '#CEEAFE',
+          300: '#A9DDF8',
+          400: '#7BC9EE',
+          500: '#53B4E1',
+          600: '#3893BD',
+        },
+
+        skyBlue: '#53B4E1',
+        powderBlue: '#CEEAFE',
+        softBlue: '#F0F8FF',
+
+        // Refined Pastel Highlights
+        lavender: '#DCCFF4',
+        blush: '#F5D5DC',
+        mint: '#D9F0E5',
+        warmGold: '#D8B875',
+
+        // Neutrals
+        ink: '#17242D',
+        textSecondary: '#526470',
+        textSubtle: '#748794',
+
+        // Remapped legacy tokens for seamless backward compatibility
+        cream: '#FFFFFF',
+        cocoa: '#526470',
+        dustyRose: '#53B4E1',
+        sage: '#D9F0E5',
 
         // Semantic UI Tokens backed by CSS variables
         bg: 'var(--bg)',
@@ -26,6 +52,7 @@ const config: Config = {
           DEFAULT: 'var(--surface)',
           raised: 'var(--surface-raised)',
           muted: 'var(--surface-muted)',
+          blue: 'var(--surface-blue)',
         },
         fg: {
           DEFAULT: 'var(--fg)',

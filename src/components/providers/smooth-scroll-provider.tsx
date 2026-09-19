@@ -30,6 +30,9 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
       touchMultiplier: 1.2,
     });
     lenisRef.current = lenis;
+    if (typeof window !== 'undefined') {
+      (window as any).__lenis = lenis;
+    }
 
     // Connect Lenis to GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
@@ -45,6 +48,9 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
       gsap.ticker.remove(updateTicker);
       lenis.destroy();
       lenisRef.current = null;
+      if (typeof window !== 'undefined') {
+        (window as any).__lenis = null;
+      }
     };
   }, []);
 

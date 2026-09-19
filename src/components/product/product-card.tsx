@@ -48,12 +48,12 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <div
-      className="group relative bg-surface rounded-2xl border border-border/80 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full"
+      className="group relative bg-white rounded-2xl border border-blue-100/90 overflow-hidden shadow-xs hover:shadow-md hover:shadow-blue-500/10 hover:-translate-y-1.5 hover:scale-[1.01] hover:rotate-[0.5deg] hover:border-blue-300 transition-all duration-300 flex flex-col h-full"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Product Image Frame */}
-      <Link href={`/product/${product.slug}`} className="block relative aspect-[4/5] overflow-hidden bg-cream/30">
+      <Link href={`/product/${product.slug}`} className="block relative aspect-[4/5] overflow-hidden bg-blue-50/30">
         {/* Main Image */}
         {mainMedia && (
           <Image
@@ -83,13 +83,13 @@ export function ProductCard({ product }: { product: Product }) {
         {/* Badges Overlay */}
         <div className="absolute top-3 left-3 flex flex-col gap-1.5 z-10">
           {product.bestSeller && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-cocoa text-cream shadow-sm">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-600 text-white shadow-xs">
               <Sparkles className="w-3 h-3 text-warmGold" />
               Best Seller
             </span>
           )}
           {product.soldCount > 100 && (
-            <span className="inline-block px-2.5 py-1 rounded-full text-xs font-medium bg-sage/90 text-cocoa shadow-sm">
+            <span className="inline-block px-2.5 py-1 rounded-full text-xs font-medium bg-white/90 backdrop-blur-sm text-blue-700 border border-blue-200/50 shadow-xs">
               {product.soldCount}+ handcrafted
             </span>
           )}
@@ -97,7 +97,7 @@ export function ProductCard({ product }: { product: Product }) {
 
         {/* Quick View Button on Hover */}
         <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
-          <div className="w-9 h-9 rounded-full bg-cream/90 backdrop-blur-sm text-cocoa hover:text-dustyRose flex items-center justify-center shadow-md">
+          <div className="w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm text-ink hover:text-blue-600 flex items-center justify-center shadow-sm">
             <Eye className="w-4 h-4" />
           </div>
         </div>
@@ -107,24 +107,24 @@ export function ProductCard({ product }: { product: Product }) {
       <div className="p-4 sm:p-5 flex flex-col flex-grow justify-between space-y-3">
         <div>
           {/* Category & Rating */}
-          <div className="flex items-center justify-between gap-2 text-xs mb-2 text-cocoa/75">
-            <span className="uppercase tracking-wider font-semibold text-dustyRose">{product.category}</span>
+          <div className="flex items-center justify-between gap-2 text-xs mb-2 text-textSecondary">
+            <span className="uppercase tracking-wider font-semibold text-blue-500">{product.category}</span>
             <div className="flex items-center gap-1">
               <Star className="w-3.5 h-3.5 fill-warmGold text-warmGold" />
               <span className="font-semibold text-ink">{product.rating.toFixed(1)}</span>
-              <span className="text-cocoa/50">({product.reviewCount})</span>
+              <span className="text-textSecondary/60">({product.reviewCount})</span>
             </div>
           </div>
 
           {/* EXACT BOLD VISUAL EMPHASIS FOR 3 LABELS & VALUES */}
-          <div className="space-y-1 py-1.5 px-3 rounded-xl bg-cream/50 border border-border/50 text-xs">
+          <div className="space-y-1 py-2 px-3 rounded-xl bg-blue-50/50 border border-blue-100 text-xs">
             <div className="flex items-baseline justify-between gap-1">
               <span className="font-bold text-ink">Item Name:</span>
-              <span className="font-semibold text-cocoa text-right truncate">{product.name}</span>
+              <span className="font-semibold text-textSecondary text-right truncate">{product.name}</span>
             </div>
             <div className="flex items-baseline justify-between gap-1">
               <span className="font-bold text-ink">Item Quantity:</span>
-              <span className={`font-semibold ${product.inventoryQty > 0 ? 'text-sage' : 'text-danger'}`}>
+              <span className={`font-semibold ${product.inventoryQty > 0 ? 'text-blue-600' : 'text-danger'}`}>
                 {product.inventoryQty > 0 ? `${product.inventoryQty} in stock` : 'Out of stock'}
               </span>
             </div>
@@ -135,19 +135,19 @@ export function ProductCard({ product }: { product: Product }) {
           </div>
 
           {/* Short Description */}
-          <p className="text-xs sm:text-sm text-cocoa/80 mt-2 line-clamp-2 leading-relaxed">
+          <p className="text-xs sm:text-sm text-textSecondary mt-2.5 line-clamp-2 leading-relaxed">
             {product.shortDescription}
           </p>
         </div>
 
         {/* Action Controls: View Details + Add to Bag */}
-        <div className="pt-3 border-t border-border/60 flex items-center gap-2">
+        <div className="pt-3 border-t border-blue-100/80 flex items-center gap-2">
           <Link
             href={`/product/${product.slug}`}
-            className="flex-1 py-2 px-3 rounded-xl border border-border/80 hover:border-dustyRose bg-surface hover:bg-cream/40 text-cocoa text-xs font-semibold flex items-center justify-center gap-1 transition-colors"
+            className="flex-1 py-2 px-3 rounded-xl border border-blue-200 hover:border-blue-400 bg-white hover:bg-blue-50/50 text-ink text-xs font-semibold flex items-center justify-center gap-1 transition-colors"
           >
             <span>Details</span>
-            <ArrowRight className="w-3 h-3 text-dustyRose" />
+            <ArrowRight className="w-3 h-3 text-blue-500" />
           </Link>
 
           <button
@@ -156,12 +156,11 @@ export function ProductCard({ product }: { product: Product }) {
             disabled={product.inventoryQty <= 0}
             className={`flex-1 py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all duration-200 ${
               product.inventoryQty <= 0
-                ? 'bg-cocoa/10 text-cocoa/40 cursor-not-allowed'
+                ? 'bg-ink/10 text-ink/40 cursor-not-allowed'
                 : addedAnimation
-                ? 'bg-sage text-cocoa scale-95'
-                : 'bg-dustyRose hover:bg-dustyRose/90 text-white shadow-sm'
+                ? 'bg-mint text-ink shadow-xs'
+                : 'bg-blue-500 hover:bg-blue-600 text-white shadow-xs hover:shadow-sm'
             }`}
-            aria-label={`Add ${product.name} to cart`}
           >
             {addedAnimation ? (
               <>

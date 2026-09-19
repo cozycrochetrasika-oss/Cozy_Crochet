@@ -87,7 +87,13 @@ test.describe('Cozy_Crochets Storefront End-to-End Suite', () => {
     await expect(page.locator('text=Send WhatsApp Confirmation')).toBeVisible();
   });
 
-  test('6. Admin portal displays decoupled payment and fulfilment statuses', async ({ page }) => {
+  test('6. Admin portal displays decoupled payment and fulfilment statuses', async ({ page, context }) => {
+    await context.addCookies([
+      { name: 'cozy_auth_role', value: 'admin', domain: 'localhost', path: '/' },
+    ]);
+    await page.goto('/login');
+    await page.click('button:has-text("Store Owner")');
+
     await page.goto('/admin/dashboard');
     await expect(page.locator('h1')).toContainText('Store Operations Overview');
 

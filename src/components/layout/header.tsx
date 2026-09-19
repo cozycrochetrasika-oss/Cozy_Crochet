@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
   ShoppingBag,
@@ -28,6 +29,7 @@ export function Header() {
   const [locationModalOpen, setLocationModalOpen] = useState(false);
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
   const [pincode, setPincode] = useState('110001');
+  const [scrolled, setScrolled] = useState(false);
 
   // Zustand stores
   const totalCartItems = useCartStore((state) => state.getTotalItems());
@@ -44,6 +46,11 @@ export function Header() {
 
   useEffect(() => {
     setMounted(true);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
@@ -56,23 +63,23 @@ export function Header() {
 
   return (
     <>
-      {/* 1. ADMIN-CONTROLLED ANNOUNCEMENT BAR (Closable) */}
+      {/* 1. ADMIN-CONTROLLED ANNOUNCEMENT BAR (Soft Blue Surface) */}
       {mounted && !announcementDismissed && (
-        <div className="bg-cocoa text-cream text-xs py-2 px-4 text-center tracking-wide flex items-center justify-between gap-3 border-b border-border/40 relative z-50">
+        <div className="bg-gradient-to-r from-blue-50 via-white to-blue-50 text-ink text-xs py-2 px-4 text-center tracking-wide flex items-center justify-between gap-3 border-b border-blue-100/80 relative z-50">
           <div className="flex-1 flex items-center justify-center gap-2 flex-wrap">
-            <Sparkles className="w-3.5 h-3.5 text-warmGold flex-shrink-0 animate-pulse" />
-            <span className="font-medium">{dailyCaption}</span>
+            <Sparkles className="w-3.5 h-3.5 text-blue-500 flex-shrink-0 animate-pulse" />
+            <span className="font-medium text-ink">{dailyCaption}</span>
             {festivalBannerActive && festivalMessage && (
               <>
-                <span className="hidden sm:inline text-cream/40">•</span>
-                <span className="text-blush font-semibold">{festivalMessage}</span>
+                <span className="hidden sm:inline text-blue-200">•</span>
+                <span className="text-blue-600 font-semibold">{festivalMessage}</span>
               </>
             )}
           </div>
           <button
             type="button"
             onClick={dismissAnnouncement}
-            className="p-1 rounded text-cream/70 hover:text-cream hover:bg-white/10 transition-colors flex-shrink-0"
+            className="p-1 rounded-md text-textSecondary hover:text-ink hover:bg-blue-100/50 transition-colors flex-shrink-0"
             aria-label="Dismiss announcement"
             title="Dismiss announcement"
           >
@@ -81,13 +88,21 @@ export function Header() {
         </div>
       )}
 
-      {/* 2. MAIN NAVIGATION HEADER (Sticky Glass & Blur) */}
-      <header className="sticky top-0 z-40 bg-cream/95 backdrop-blur-md border-b border-border transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between gap-4">
+      {/* 2. MAIN NAVIGATION HEADER (Sticky Glass & Subtle Blur) */}
+      <header
+        className={`sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-blue-100/70 transition-all duration-200 ${
+          scrolled ? 'shadow-xs' : ''
+        }`}
+      >
+        <div
+          className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4 transition-all duration-200 ${
+            scrolled ? 'h-16' : 'h-18'
+          }`}
+        >
           {/* Mobile Menu Button */}
           <button
             type="button"
-            className="md:hidden p-2 rounded-md text-cocoa hover:bg-blush/30 transition-colors"
+            className="md:hidden p-2 rounded-xl text-textSecondary hover:bg-blue-50 transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle navigation menu"
           >
@@ -96,10 +111,17 @@ export function Header() {
 
           {/* Brand Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-full bg-dustyRose flex items-center justify-center text-white font-display text-lg font-bold shadow-sm group-hover:scale-105 transition-transform">
-              C
+            <div className="relative w-9 h-9 rounded-full overflow-hidden border border-blue-200 shadow-xs group-hover:scale-105 transition-transform flex-shrink-0 bg-white">
+              <Image
+                src="/brand/logo.jpg"
+                alt="Cozy Stitches by Rasika Logo"
+                fill
+                priority
+                sizes="36px"
+                className="object-cover"
+              />
             </div>
-            <span className="font-display font-bold text-2xl tracking-tight text-ink group-hover:text-dustyRose transition-colors">
+            <span className="font-display font-bold text-2xl tracking-tight text-ink group-hover:text-blue-600 transition-colors">
               Cozy_Crochets
             </span>
           </Link>
@@ -112,13 +134,13 @@ export function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative py-1 transition-colors ${
-                    isActive ? 'text-dustyRose font-semibold' : 'text-cocoa hover:text-ink'
+                  className={`relative py-1.5 transition-colors ${
+                    isActive ? 'text-blue-600 font-semibold' : 'text-textSecondary hover:text-ink'
                   }`}
                 >
                   {link.name}
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-dustyRose rounded-full" />
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500 rounded-full" />
                   )}
                 </Link>
               );
@@ -131,17 +153,17 @@ export function Header() {
             <button
               type="button"
               onClick={() => setLocationModalOpen(true)}
-              className="hidden lg:flex items-center gap-1.5 text-xs text-cocoa hover:text-ink py-1.5 px-3 rounded-full border border-border/60 hover:border-dustyRose bg-surface/80 transition-colors"
+              className="hidden lg:flex items-center gap-1.5 text-xs text-textSecondary hover:text-ink py-1.5 px-3 rounded-full border border-blue-100 hover:border-blue-300 bg-blue-50/40 transition-colors"
               title="Select Delivery Location"
             >
-              <MapPin className="w-3.5 h-3.5 text-dustyRose" />
+              <MapPin className="w-3.5 h-3.5 text-blue-500" />
               <span>Deliver to: <strong className="font-semibold text-ink">{pincode}</strong></span>
             </button>
 
             {/* Search Link */}
             <Link
               href="/search"
-              className="p-2 text-cocoa hover:text-dustyRose rounded-full hover:bg-blush/20 transition-colors"
+              className="p-2 text-textSecondary hover:text-blue-500 rounded-full hover:bg-blue-50 transition-colors"
               aria-label="Search crochet products"
             >
               <Search className="w-5 h-5" />
@@ -152,17 +174,17 @@ export function Header() {
               <div className="flex items-center gap-1.5">
                 <Link
                   href="/account"
-                  className="flex items-center gap-1.5 p-1.5 px-2.5 rounded-full bg-dustyRose/10 text-xs font-semibold text-cocoa hover:bg-dustyRose/20 transition-colors"
+                  className="flex items-center gap-1.5 p-1.5 px-2.5 rounded-full bg-blue-50 text-xs font-semibold text-blue-600 hover:bg-blue-100 transition-colors border border-blue-100"
                   aria-label="View account profile"
                 >
-                  <User className="w-4 h-4 text-dustyRose" />
+                  <User className="w-4 h-4 text-blue-500" />
                   <span className="hidden xl:inline">{user?.fullName.split(' ')[0]}</span>
                 </Link>
               </div>
             ) : (
               <Link
                 href="/login"
-                className="p-2 text-cocoa hover:text-dustyRose rounded-full hover:bg-blush/20 transition-colors"
+                className="p-2 text-textSecondary hover:text-blue-500 rounded-full hover:bg-blue-50 transition-colors"
                 aria-label="Sign in"
                 title="Login"
               >
@@ -174,12 +196,12 @@ export function Header() {
             <button
               type="button"
               onClick={() => setCartDrawerOpen(true)}
-              className="relative p-2 text-cocoa hover:text-dustyRose rounded-full hover:bg-blush/20 transition-colors"
+              className="relative p-2 text-textSecondary hover:text-blue-500 rounded-full hover:bg-blue-50 transition-colors"
               aria-label={`Shopping bag with ${totalCartItems} items`}
             >
               <ShoppingBag className="w-5 h-5" />
               {mounted && totalCartItems > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-dustyRose text-white text-[11px] font-bold rounded-full flex items-center justify-center shadow-sm">
+                <span className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-blue-500 text-white text-[11px] font-bold rounded-full flex items-center justify-center shadow-xs">
                   {totalCartItems}
                 </span>
               )}
@@ -189,14 +211,14 @@ export function Header() {
             {mounted && (isAdmin || true) && (
               <Link
                 href="/admin"
-                className={`flex items-center gap-1 text-xs py-1 px-2.5 rounded-md font-semibold transition-colors border ${
+                className={`flex items-center gap-1 text-xs py-1.5 px-3 rounded-lg font-semibold transition-colors border ${
                   isAdmin
-                    ? 'bg-cocoa text-cream border-cocoa hover:bg-cocoa/90'
-                    : 'bg-cocoa/5 hover:bg-cocoa/10 text-cocoa border-border/50'
+                    ? 'bg-blue-600 text-white border-blue-600 hover:bg-blue-700 shadow-xs'
+                    : 'bg-blue-50 hover:bg-blue-100 text-blue-700 border-blue-200'
                 }`}
                 title="Admin Control Center"
               >
-                <ShieldAlert className="w-3.5 h-3.5 text-dustyRose" />
+                <ShieldAlert className="w-3.5 h-3.5 text-blue-500" />
                 <span>Admin</span>
               </Link>
             )}
@@ -205,17 +227,17 @@ export function Header() {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-border bg-cream px-4 pt-3 pb-6 space-y-3">
+          <div className="md:hidden border-t border-blue-100 bg-white px-4 pt-3 pb-6 space-y-3">
             <nav className="flex flex-col space-y-2">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`px-3 py-2 rounded-md text-base font-medium transition-colors flex items-center justify-between ${
+                  className={`px-3 py-2 rounded-xl text-base font-medium transition-colors flex items-center justify-between ${
                     pathname === link.href
-                      ? 'bg-dustyRose/15 text-dustyRose font-semibold'
-                      : 'text-cocoa hover:bg-blush/20'
+                      ? 'bg-blue-50 text-blue-600 font-semibold'
+                      : 'text-textSecondary hover:bg-blue-50/60'
                   }`}
                 >
                   <span>{link.name}</span>

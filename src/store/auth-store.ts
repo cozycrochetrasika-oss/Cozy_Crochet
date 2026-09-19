@@ -38,6 +38,9 @@ export const useAuthStore = create<AuthState>()(
       pendingIntent: null,
 
       loginAsCustomer: (email = 'patron@example.com', name = 'Aarti Deshmukh') => {
+        if (typeof document !== 'undefined') {
+          document.cookie = 'cozy_auth_role=customer; path=/; max-age=86400; SameSite=Lax';
+        }
         set({
           user: {
             id: 'cust_demo_01',
@@ -49,10 +52,13 @@ export const useAuthStore = create<AuthState>()(
         });
       },
 
-      loginAsAdmin: (email = 'admin@cozycrochets.com', name = 'Store Owner') => {
+      loginAsAdmin: (email = 'cozycrochetrasika@gmail.com', name = 'Rasika (Store Owner)') => {
+        if (typeof document !== 'undefined') {
+          document.cookie = 'cozy_auth_role=admin; path=/; max-age=86400; SameSite=Lax';
+        }
         set({
           user: {
-            id: 'admin_demo_01',
+            id: 'admin_owner_01',
             email,
             fullName: name,
             role: 'admin',
@@ -62,6 +68,9 @@ export const useAuthStore = create<AuthState>()(
       },
 
       logout: () => {
+        if (typeof document !== 'undefined') {
+          document.cookie = 'cozy_auth_role=; path=/; max-age=0; SameSite=Lax';
+        }
         set({
           user: null,
           isAuthenticated: false,

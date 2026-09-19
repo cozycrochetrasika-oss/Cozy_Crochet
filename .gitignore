@@ -8,6 +8,9 @@ node_modules/
 .env.production
 *.pem
 *.key
+admin-store.json
+.data/
+data/admin-store.json
 
 # --- Build output ---
 .next/

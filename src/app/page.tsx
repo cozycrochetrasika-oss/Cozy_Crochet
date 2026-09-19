@@ -17,6 +17,7 @@ import {
 import { Hero3DScene } from '@/components/hero/hero-3d-scene';
 import { ProductCard } from '@/components/product/product-card';
 import { getAllProducts, getFeaturedProducts } from '@/data/products';
+import { getGeneralWhatsAppInquiryUrl } from '@/lib/config/business';
 
 export default function HomePage() {
   const featuredProducts = getFeaturedProducts();
@@ -55,28 +56,28 @@ export default function HomePage() {
   return (
     <div className="space-y-20 sm:space-y-28 pb-20">
       {/* 1. CINEMATIC HERO SECTION ("The Living Yarn Store") */}
-      <section className="relative min-h-[85vh] lg:min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-b from-cream via-cream/80 to-blush/20">
+      <section className="relative min-h-[85vh] lg:min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-b from-white via-blue-50/30 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Hero Copy & Explicit CTAs */}
           <div className="lg:col-span-6 space-y-6 text-center lg:text-left z-10">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blush/50 border border-dustyRose/30 text-xs font-semibold uppercase tracking-wider text-cocoa">
-              <Sparkles className="w-3.5 h-3.5 text-dustyRose" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/70 text-xs font-semibold uppercase tracking-wider text-blue-600">
+              <Sparkles className="w-3.5 h-3.5 text-blue-500" />
               <span>The Living Yarn Store</span>
             </div>
 
             <h1 className="font-display font-extrabold text-4xl sm:text-6xl lg:text-7xl text-ink tracking-tight leading-[1.08]">
               Handmade with yarn. <br className="hidden sm:inline" />
-              <span className="text-dustyRose italic">Made with love.</span>
+              <span className="text-blue-500 italic">Made with love.</span>
             </h1>
 
-            <p className="text-base sm:text-lg text-cocoa/85 leading-relaxed max-w-xl mx-auto lg:mx-0">
+            <p className="text-base sm:text-lg text-textSecondary leading-relaxed max-w-xl mx-auto lg:mx-0">
               Unique crochet pieces made one stitch at a time.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-3">
               <Link
                 href="/shop"
-                className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-dustyRose hover:bg-dustyRose/90 text-white font-semibold text-base shadow-yarn flex items-center justify-center gap-2.5 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-blue-500 hover:bg-blue-600 text-white font-semibold text-base shadow-md shadow-blue-500/20 flex items-center justify-center gap-2.5 transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
                 <span>Explore Collection</span>
                 <ArrowRight className="w-4 h-4" />
@@ -84,25 +85,25 @@ export default function HomePage() {
 
               <Link
                 href="/customize"
-                className="w-full sm:w-auto px-7 py-4 rounded-2xl bg-surface hover:bg-surface-raised text-cocoa font-semibold text-base border border-border hover:border-dustyRose flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                className="w-full sm:w-auto px-7 py-4 rounded-2xl bg-white hover:bg-blue-50/70 text-ink font-semibold text-base border border-blue-200 hover:border-blue-400 flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
                 <span>Request Custom Crochet</span>
               </Link>
             </div>
 
             {/* Micro Craft Highlights */}
-            <div className="grid grid-cols-3 gap-4 pt-8 border-t border-border/60 max-w-md mx-auto lg:mx-0 text-left">
+            <div className="grid grid-cols-3 gap-4 pt-8 border-t border-blue-100 max-w-md mx-auto lg:mx-0 text-left">
               <div>
                 <span className="block font-display font-bold text-2xl text-ink">100%</span>
-                <span className="text-xs text-cocoa/70">Organic Cotton</span>
+                <span className="text-xs text-textSecondary">Organic Cotton</span>
               </div>
               <div>
                 <span className="block font-display font-bold text-2xl text-ink">4.9 ★</span>
-                <span className="text-xs text-cocoa/70">Craft Rating</span>
+                <span className="text-xs text-textSecondary">Craft Rating</span>
               </div>
               <div>
                 <span className="block font-display font-bold text-2xl text-ink">Zero</span>
-                <span className="text-xs text-cocoa/70">Machine Waste</span>
+                <span className="text-xs text-textSecondary">Machine Waste</span>
               </div>
             </div>
           </div>
@@ -119,80 +120,80 @@ export default function HomePage() {
       {/* 2. STORE METRICS (With Explicit [DEMO] Badging) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          <div className="p-6 rounded-2xl bg-surface border border-border shadow-sm space-y-2 relative overflow-hidden">
+          <div className="p-6 rounded-2xl bg-white border border-blue-100 hover:border-blue-200 shadow-xs space-y-2 relative overflow-hidden transition-all">
             <div className="flex items-center justify-between">
-              <Package className="w-5 h-5 text-dustyRose" />
-              <span className="text-[10px] font-bold uppercase tracking-wider bg-blush/60 text-cocoa px-2 py-0.5 rounded-full">
+              <Package className="w-5 h-5 text-blue-500" />
+              <span className="text-[10px] font-bold uppercase tracking-wider bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full border border-blue-200/50">
                 DEMO
               </span>
             </div>
             <div className="font-display font-extrabold text-3xl sm:text-4xl text-ink tabular-nums">
               1,420+
             </div>
-            <p className="text-xs sm:text-sm font-medium text-cocoa/75">Handcrafted Items Sold</p>
+            <p className="text-xs sm:text-sm font-medium text-textSecondary">Handcrafted Items Sold</p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-surface border border-border shadow-sm space-y-2 relative overflow-hidden">
+          <div className="p-6 rounded-2xl bg-white border border-blue-100 hover:border-blue-200 shadow-xs space-y-2 relative overflow-hidden transition-all">
             <div className="flex items-center justify-between">
-              <CheckCircle className="w-5 h-5 text-sage" />
-              <span className="text-[10px] font-bold uppercase tracking-wider bg-blush/60 text-cocoa px-2 py-0.5 rounded-full">
+              <CheckCircle className="w-5 h-5 text-mint" />
+              <span className="text-[10px] font-bold uppercase tracking-wider bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full border border-blue-200/50">
                 DEMO
               </span>
             </div>
             <div className="font-display font-extrabold text-3xl sm:text-4xl text-ink tabular-nums">
               980+
             </div>
-            <p className="text-xs sm:text-sm font-medium text-cocoa/75">Orders Delivered</p>
+            <p className="text-xs sm:text-sm font-medium text-textSecondary">Orders Delivered</p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-surface border border-border shadow-sm space-y-2 relative overflow-hidden">
+          <div className="p-6 rounded-2xl bg-white border border-blue-100 hover:border-blue-200 shadow-xs space-y-2 relative overflow-hidden transition-all">
             <div className="flex items-center justify-between">
               <Clock className="w-5 h-5 text-warmGold" />
-              <span className="text-[10px] font-bold uppercase tracking-wider bg-blush/60 text-cocoa px-2 py-0.5 rounded-full">
+              <span className="text-[10px] font-bold uppercase tracking-wider bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full border border-blue-200/50">
                 DEMO
               </span>
             </div>
             <div className="font-display font-extrabold text-3xl sm:text-4xl text-ink tabular-nums">
               14
             </div>
-            <p className="text-xs sm:text-sm font-medium text-cocoa/75">Orders in Progress</p>
+            <p className="text-xs sm:text-sm font-medium text-textSecondary">Orders in Progress</p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-surface border border-border shadow-sm space-y-2 relative overflow-hidden">
+          <div className="p-6 rounded-2xl bg-white border border-blue-100 hover:border-blue-200 shadow-xs space-y-2 relative overflow-hidden transition-all">
             <div className="flex items-center justify-between">
               <Star className="w-5 h-5 fill-warmGold text-warmGold" />
-              <span className="text-[10px] font-bold uppercase tracking-wider bg-blush/60 text-cocoa px-2 py-0.5 rounded-full">
+              <span className="text-[10px] font-bold uppercase tracking-wider bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full border border-blue-200/50">
                 DEMO
               </span>
             </div>
             <div className="font-display font-extrabold text-3xl sm:text-4xl text-ink tabular-nums">
               320+
             </div>
-            <p className="text-xs sm:text-sm font-medium text-cocoa/75">Customer Reviews (4.9 ★)</p>
+            <p className="text-xs sm:text-sm font-medium text-textSecondary">Customer Reviews (4.9 ★)</p>
           </div>
         </div>
       </section>
 
       {/* 3. FESTIVAL / PROMO BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-dustyRose/90 via-dustyRose to-cocoa text-white p-8 sm:p-12 shadow-lg">
+        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-blue-600 via-blue-500 to-skyBlue text-white p-8 sm:p-12 shadow-md shadow-blue-500/15">
           <div className="relative z-10 max-w-2xl space-y-4">
             <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-sm tracking-wider uppercase">
               Festival Season Offering
             </span>
-            <h2 className="font-display font-bold text-2xl sm:text-4xl leading-tight">
+            <h2 className="font-display font-bold text-2xl sm:text-4xl leading-tight text-white">
               Gift Everlasting Blooms to Those Who Warm Your Heart
             </h2>
-            <p className="text-sm sm:text-base text-white/85 leading-relaxed">
+            <p className="text-sm sm:text-base text-white/90 leading-relaxed">
               Every festive order includes our signature hand-wrapped craft gift packaging and a personalized handwritten calligraphy note card.
             </p>
             <div className="pt-2">
               <Link
                 href="/shop?category=Bouquets"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-cocoa font-semibold text-sm hover:bg-cream transition-colors shadow"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-ink font-semibold text-sm hover:bg-blue-50 transition-colors shadow-xs"
               >
                 <span>Browse Gift Bouquets</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 text-blue-500" />
               </Link>
             </div>
           </div>
@@ -203,7 +204,7 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
           <div>
-            <span className="text-xs font-bold uppercase tracking-widest text-dustyRose">
+            <span className="text-xs font-bold uppercase tracking-widest text-blue-500">
               Curated Masterpieces
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-ink mt-1">
@@ -212,7 +213,7 @@ export default function HomePage() {
           </div>
           <Link
             href="/shop"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-cocoa hover:text-dustyRose transition-colors group"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-textSecondary hover:text-blue-600 transition-colors group"
           >
             <span>View All 7 Collections</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -342,28 +343,28 @@ export default function HomePage() {
 
       {/* 8. ARTISAN WHATSAPP & BESPOKE CTA */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-8 sm:p-12 rounded-3xl bg-surface border border-dustyRose/40 shadow-sm flex flex-col lg:flex-row items-center justify-between gap-8">
+        <div className="p-8 sm:p-12 rounded-3xl bg-white border border-blue-200/80 shadow-md shadow-blue-500/5 flex flex-col lg:flex-row items-center justify-between gap-8">
           <div className="space-y-3 text-center lg:text-left max-w-xl">
             <h3 className="font-display font-bold text-2xl sm:text-3xl text-ink">
               Dreaming of a custom colorway or bridal bouquet?
             </h3>
-            <p className="text-sm text-cocoa/80 leading-relaxed">
+            <p className="text-sm text-textSecondary leading-relaxed">
               Our master craftswomen work directly with you to match wedding palettes, nursery themes, and anniversary milestones.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
             <a
-              href="https://wa.me/919876543210"
+              href={getGeneralWhatsAppInquiryUrl()}
               target="_blank"
               rel="noreferrer"
-              className="px-6 py-3.5 rounded-xl bg-sage text-cocoa font-semibold text-sm flex items-center justify-center gap-2 hover:bg-sage/90 shadow-sm transition-colors"
+              className="px-6 py-3.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200 font-semibold text-sm flex items-center justify-center gap-2 shadow-xs transition-colors"
             >
-              <MessageCircle className="w-4 h-4" />
+              <MessageCircle className="w-4 h-4 text-blue-500" />
               <span>Chat on WhatsApp</span>
             </a>
             <Link
               href="/customize"
-              className="px-6 py-3.5 rounded-xl bg-dustyRose text-white font-semibold text-sm flex items-center justify-center gap-2 hover:bg-dustyRose/90 shadow-sm transition-colors"
+              className="px-6 py-3.5 rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-md shadow-blue-500/20 transition-all hover:scale-[1.02]"
             >
               <span>Submit Custom Form</span>
             </Link>

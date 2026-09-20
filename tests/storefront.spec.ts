@@ -79,7 +79,7 @@ test.describe('Cozy_Crochets Storefront End-to-End Suite', () => {
     await page.click('button:has-text("Proceed to Payment")');
 
     // Step 4: Payment
-    await page.click('button:has-text("Authorize & Place Order")');
+    await page.click('button:has-text("Create Demo Order")');
 
     // Step 5: Confirmation
     await expect(page.locator('text=Order Registered')).toBeVisible();
@@ -87,21 +87,15 @@ test.describe('Cozy_Crochets Storefront End-to-End Suite', () => {
     await expect(page.locator('text=Send WhatsApp Confirmation')).toBeVisible();
   });
 
-  test('6. Admin portal displays decoupled payment and fulfilment statuses', async ({ page, context }) => {
-    await context.addCookies([
-      { name: 'cozy_auth_role', value: 'admin', domain: 'localhost', path: '/' },
-    ]);
-    await page.goto('/login');
-    await page.click('button:has-text("Store Owner")');
-
-    await page.goto('/admin/dashboard');
-    await expect(page.locator('h1')).toContainText('Store Operations Overview');
-
+  test('6. Forged admin role cookie cannot authorize protected routes', async ({ page, context }) => {
+    await context.addCookies([{ name: 'cozy_auth_role', value: 'admin', domain: 'localhost', path: '/' }]);
     await page.goto('/admin/orders');
-    await expect(page.locator('h1')).toContainText('Orders & Fulfillment Management');
-    await expect(page.locator('text=CC-914820')).toBeVisible();
-    await expect(page.locator('text=Payment Status').first()).toBeVisible();
-    await expect(page.locator('text=Fulfilment Status').first()).toBeVisible();
+    await expect(page).toHaveURL(/\/login\?.*admin_access_required/);
+    const response = await page.request.post('/api/auth/admin/change-password', {
+      headers: { origin: 'http://localhost:3000' },
+      data: { currentPassword: 'invalid', newPassword: 'InvalidPass123!' },
+    });
+    expect(response.status()).toBe(401);
   });
 
   test('7. Custom crochet portal submits bespoke inquiries', async ({ page }) => {

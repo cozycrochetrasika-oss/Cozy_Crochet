@@ -98,7 +98,7 @@ export default function CheckoutPage() {
         style: tileUrl,
         center: [lng, lat],
         zoom: 12,
-        attributionControl: false,
+        attributionControl: { compact: true },
       });
 
       const marker = new maplibregl.Marker({
@@ -216,22 +216,6 @@ export default function CheckoutPage() {
   // STEP 5: ORDER CONFIRMATION & RECEIPT
   // ==========================================
   if (currentStep === 5 && orderSummary) {
-    const whatsappUrl = generateWhatsAppOrderUrl({
-      whatsappNumber: '+919876543210',
-      orderNumber: orderSummary.orderNumber,
-      customerName: customerInfo.fullName,
-      amountPaise: orderSummary.totalPaise,
-      verificationCode: orderSummary.verificationCode,
-      itemsSummary: items.length > 0 ? items.map((i) => `${i.quantity}x ${i.product.name}`).join(', ') : 'Handcrafted item(s)',
-    });
-
-    const upiIntentUrl = generateUpiIntentUrl({
-      upiId: 'cozycrochets@upi',
-      payeeName: 'Cozy Crochets Handmade',
-      amountPaise: orderSummary.totalPaise,
-      orderNumber: orderSummary.orderNumber,
-    });
-
     return (
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
         <div className="p-8 sm:p-12 rounded-3xl bg-surface border border-border shadow-sm space-y-8 text-center">
@@ -245,7 +229,7 @@ export default function CheckoutPage() {
               Thank You for Supporting Handcrafted Art!
             </h1>
             <p className="text-sm text-cocoa max-w-md mx-auto">
-              Your order <strong className="text-ink font-mono">{orderSummary.orderNumber}</strong> has been registered in our workshop queue.
+              Your order <strong className="text-ink font-mono">{orderSummary.orderNumber}</strong> is a local demo. It has not been sent to the workshop.
             </p>
           </div>
 
@@ -258,15 +242,15 @@ export default function CheckoutPage() {
 
               <div className="space-y-3 text-xs text-cocoa/90 leading-relaxed">
                 <p>
-                  1. Send <strong>{formatINR(orderSummary.totalPaise)}</strong> via Google Pay / PhonePe / Paytm to:
+                  Payment preview only. Do not send money.
                 </p>
                 <div className="p-3 bg-surface rounded-xl border border-border font-mono font-bold text-sm text-ink flex items-center justify-between">
-                  <span>cozycrochets@upi</span>
-                  <span className="text-[10px] uppercase font-semibold text-sage bg-sage/20 px-2 py-0.5 rounded">Verified Business</span>
+                  <span>Payment recipient not configured</span>
+                  <span className="text-[10px] uppercase font-semibold text-sage bg-sage/20 px-2 py-0.5 rounded">Demo only</span>
                 </div>
 
                 <p>
-                  2. Quote your 6-digit confirmation code in WhatsApp message:
+                  Sample six-digit order reference:
                 </p>
                 <div className="p-3.5 bg-surface rounded-xl border border-dustyRose/60 font-mono font-extrabold text-xl text-dustyRose flex items-center justify-between shadow-xs">
                   <span>{orderSummary.verificationCode}</span>
@@ -286,7 +270,7 @@ export default function CheckoutPage() {
 
               <div className="pt-2 flex flex-col gap-3">
                 <a
-                  href={whatsappUrl}
+                  aria-disabled="true"
                   target="_blank"
                   rel="noreferrer"
                   className="w-full py-3.5 px-4 rounded-xl bg-sage hover:bg-sage/90 text-cocoa font-semibold text-sm flex items-center justify-center gap-2 shadow-sm transition-colors"
@@ -296,7 +280,7 @@ export default function CheckoutPage() {
                 </a>
 
                 <a
-                  href={upiIntentUrl}
+                  aria-disabled="true"
                   className="w-full py-2.5 px-4 rounded-xl border border-border hover:bg-surface text-cocoa font-medium text-xs flex items-center justify-center gap-2 transition-colors"
                 >
                   <span>Open UPI App Directly</span>
@@ -306,9 +290,9 @@ export default function CheckoutPage() {
           ) : (
             <div className="p-6 rounded-2xl bg-cream/60 border border-border text-center space-y-3 max-w-md mx-auto">
               <CreditCard className="w-6 h-6 text-dustyRose mx-auto" />
-              <h3 className="font-display font-bold text-base text-ink">Stripe Card Payment Initiated</h3>
+              <h3 className="font-display font-bold text-base text-ink">Stripe Payment Preview</h3>
               <p className="text-xs text-cocoa">
-                Your payment of {formatINR(orderSummary.totalPaise)} has been authorized securely. A receipt has been sent to {customerInfo.email}.
+                Stripe is not connected. No payment was authorized and no receipt was sent.
               </p>
             </div>
           )}
@@ -692,7 +676,7 @@ export default function CheckoutPage() {
                   className="px-8 py-4 rounded-xl bg-dustyRose hover:bg-dustyRose/90 text-white font-semibold text-sm shadow-sm flex items-center gap-2 transition-all"
                 >
                   <ShieldCheck className="w-4 h-4" />
-                  <span>Authorize & Place Order ({formatINR(grandTotalPaise)})</span>
+                  <span>Create Demo Order ({formatINR(grandTotalPaise)})</span>
                 </button>
               </div>
             </div>

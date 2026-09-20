@@ -3,10 +3,14 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Save, Sparkles } from 'lucide-react';
+import { ArrowLeft, Save, Sparkles, CheckCircle2 } from 'lucide-react';
+import { useProductsStore } from '@/store/products-store';
+import type { Product, MediaItem } from '@/data/products';
 
 export default function AdminNewProductPage() {
   const router = useRouter();
+  const addProduct = useProductsStore((s) => s.addProduct);
+  const [saved, setSaved] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     slug: '',
@@ -17,6 +21,7 @@ export default function AdminNewProductPage() {
     inventoryQty: 10,
     featured: false,
     bestSeller: false,
+    imageUrl: '/products/Sunflower/main.png',
   });
 
   const handleNameChange = (name: string) => {
@@ -26,8 +31,44 @@ export default function AdminNewProductPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert('Product created in local administrative state!');
-    router.push('/admin/products');
+    const id = `prod_${Date.now()}`;
+    const media: MediaItem[] = [
+      {
+        id: `${id}-main`,
+        mediaType: 'image',
+        slot: 'main',
+        filename: formData.imageUrl.split('/').pop() || 'main.png',
+        relativePath: formData.imageUrl.replace(/^\/products\//, ''),
+        publicUrl: formData.imageUrl,
+        altText: `${formData.name} - Main view`,
+        sortOrder: 1,
+      },
+    ];
+
+    const newProd: Product = {
+      id,
+      slug: formData.slug || `product-${Date.now()}`,
+      folderName: formData.category,
+      name: formData.name,
+      category: formData.category,
+      shortDescription: formData.shortDescription,
+      description: formData.description,
+      pricePaise: Number(formData.pricePaise),
+      inventoryQty: Number(formData.inventoryQty),
+      rating: 5.0,
+      reviewCount: 1,
+      soldCount: 0,
+      active: true,
+      featured: formData.featured,
+      bestSeller: formData.bestSeller,
+      media,
+    };
+
+    addProduct(newProd);
+    setSaved(true);
+    setTimeout(() => {
+      router.push('/admin/products');
+    }, 600);
   };
 
   return (
@@ -132,6 +173,30 @@ export default function AdminNewProductPage() {
             className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-cream/30 text-sm outline-none focus:border-dustyRose"
           />
         </div>
+
+        <div>
+          <label className="block text-xs font-semibold text-cocoa mb-1 uppercase tracking-wider">Product Showcase Image</label>
+          <select
+            value={formData.imageUrl}
+            onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+            className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-cream/30 text-sm outline-none focus:border-dustyRose"
+          >
+            <option value="/products/Sunflower/main.png">Sunflower Main (/products/Sunflower/main.png)</option>
+            <option value="/products/Rose/main.png">Rose Main (/products/Rose/main.png)</option>
+            <option value="/products/Bag/main.png">Bag Main (/products/Bag/main.png)</option>
+            <option value="/products/Boque/main.png">Bouquet Main (/products/Boque/main.png)</option>
+            <option value="/products/HeadBands/main.jpeg">Headbands Main (/products/HeadBands/main.jpeg)</option>
+            <option value="/products/Key_Ring/main.png">Keyring Main (/products/Key_Ring/main.png)</option>
+            <option value="/products/Kid_Shoe/main.jpeg">Kid Shoes Main (/products/Kid_Shoe/main.jpeg)</option>
+          </select>
+        </div>
+
+        {saved && (
+          <div className="p-3 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-xl text-xs flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+            <span>Product successfully saved and added to live catalog! Redirecting...</span>
+          </div>
+        )}
 
         <div className="flex items-center gap-6 pt-2">
           <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-cocoa">

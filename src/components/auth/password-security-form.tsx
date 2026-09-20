@@ -64,6 +64,7 @@ export function PasswordSecurityForm({ mode, onSuccess }: PasswordSecurityFormPr
       return;
     }
 
+    if (mode !== 'admin') { setErrorMessage('Customer authentication is a local demo. Password changes require the Supabase integration.'); return; }
     setLoading(true);
 
     try {

@@ -43,7 +43,9 @@ export interface PaymentVerificationResult {
 
 // Helper to generate cryptographically safe 6-digit verification code
 export function generateVerificationCode(): string {
-  return Math.floor(100000 + Math.random() * 900000).toString();
+  const buffer = new Uint32Array(1);
+  do { crypto.getRandomValues(buffer); } while (buffer[0] >= 4294800000);
+  return String(100000 + buffer[0] % 900000);
 }
 
 // Generate UPI Intent URL
@@ -58,7 +60,7 @@ export function generateUpiIntentUrl(params: {
   const encodedName = encodeURIComponent(params.payeeName);
   const encodedNote = encodeURIComponent(note);
 
-  return `upi://pay?pa=${params.upiId}&pn=${encodedName}&am=${amountRupees}&cu=INR&tn=${encodedNote}`;
+  return `upi://pay?pa=${encodeURIComponent(params.upiId)}&pn=${encodedName}&am=${amountRupees}&cu=INR&tn=${encodedNote}`;
 }
 
 // Generate pre-formatted WhatsApp order message URL

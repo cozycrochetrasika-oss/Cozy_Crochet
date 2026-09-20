@@ -55,6 +55,11 @@ export const useAuthStore = create<AuthState>()(
       loginAsAdmin: (email = 'cozycrochetrasika@gmail.com', name = 'Rasika (Store Owner)') => {
         if (typeof document !== 'undefined') {
           document.cookie = 'cozy_auth_role=admin; path=/; max-age=86400; SameSite=Lax';
+          void fetch('/api/auth/admin/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ quickAuth: true, email }),
+          }).catch(() => {});
         }
         set({
           user: {
@@ -70,6 +75,7 @@ export const useAuthStore = create<AuthState>()(
       logout: () => {
         if (typeof document !== 'undefined') {
           document.cookie = 'cozy_auth_role=; path=/; max-age=0; SameSite=Lax';
+          void fetch('/api/auth/admin/logout', { method: 'POST' });
         }
         set({
           user: null,

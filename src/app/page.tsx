@@ -14,14 +14,26 @@ import {
   CheckCircle,
   Sparkle,
 } from 'lucide-react';
-import { Hero3DScene } from '@/components/hero/hero-3d-scene';
+import { HeroSlideshow } from '@/components/hero/hero-slideshow';
 import { ProductCard } from '@/components/product/product-card';
 import { getAllProducts, getFeaturedProducts } from '@/data/products';
+import { useProductsStore } from '@/store/products-store';
 import { getGeneralWhatsAppInquiryUrl } from '@/lib/config/business';
 
 export default function HomePage() {
-  const featuredProducts = getFeaturedProducts();
-  const allProducts = getAllProducts();
+  const storeProducts = useProductsStore((s) => s.products);
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const featuredProducts = (mounted && storeProducts && storeProducts.length > 0)
+    ? storeProducts.filter((p) => p.active && p.featured)
+    : getFeaturedProducts();
+  const allProducts = (mounted && storeProducts && storeProducts.length > 0)
+    ? storeProducts.filter((p) => p.active)
+    : getAllProducts();
 
   const reviews = [
     {
@@ -108,11 +120,9 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Hero 3D WebGL Canvas (Single optimized R3F instance) */}
-          <div className="lg:col-span-6 h-[420px] sm:h-[500px] lg:h-[580px] w-full relative">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <Hero3DScene />
-            </div>
+          {/* Hero Artisan Slideshow (Local Optimized Showcase) */}
+          <div className="lg:col-span-6 w-full flex items-center justify-center">
+            <HeroSlideshow />
           </div>
         </div>
       </section>

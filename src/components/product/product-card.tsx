@@ -53,7 +53,7 @@ export function ProductCard({ product }: { product: Product }) {
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Product Image Frame */}
-      <Link href={`/product/${product.slug}`} className="block relative aspect-[4/5] overflow-hidden bg-blue-50/30">
+      <Link prefetch={false} href={`/product/${product.slug}`} className="block relative aspect-[4/5] overflow-hidden bg-blue-50/30">
         {/* Main Image */}
         {mainMedia && (
           <Image
@@ -70,6 +70,7 @@ export function ProductCard({ product }: { product: Product }) {
         {/* Secondary Hover Image */}
         {secondaryMedia && secondaryMedia !== mainMedia && (
           <Image
+            fetchPriority="low"
             src={secondaryMedia.publicUrl}
             alt={secondaryMedia.altText}
             fill

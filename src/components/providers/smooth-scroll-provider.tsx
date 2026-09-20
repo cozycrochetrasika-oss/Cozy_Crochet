@@ -15,10 +15,12 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
 
   useEffect(() => {
     // Check prefers-reduced-motion
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) {
-      return;
-    }
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let dispose = () => {};
+    const setup = () => {
+    dispose();
+    dispose = () => {};
+    if (motionQuery.matches) return;
 
     // Initialize Lenis
     const lenis = new Lenis({
@@ -44,7 +46,7 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
     gsap.ticker.add(updateTicker);
     gsap.ticker.lagSmoothing(0);
 
-    return () => {
+    dispose = () => {
       gsap.ticker.remove(updateTicker);
       lenis.destroy();
       lenisRef.current = null;
@@ -52,6 +54,10 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
         (window as any).__lenis = null;
       }
     };
+    };
+    setup();
+    motionQuery.addEventListener('change', setup);
+    return () => { motionQuery.removeEventListener('change', setup); dispose(); };
   }, []);
 
   return <>{children}</>;

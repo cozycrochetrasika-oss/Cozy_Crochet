@@ -22,12 +22,12 @@ const fontBody = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: 'Cozy_Crochets — The Living Yarn Store',
   description:
-    'Handmade artisan crochet creations made with organic milk cotton yarn. Discover everlasting bouquets, woven bags, plush footwear, floral stems, and bespoke gifts.',
+    'Handmade artisan crochet creations made one stitch at a time. Discover everlasting bouquets, woven bags, plush footwear, floral stems, and bespoke gifts.',
+  robots: { index: false, follow: false },
   keywords: ['crochet', 'handmade', 'yarn', 'crochet flowers', 'crochet bag', 'artisan craft'],
   openGraph: {
     title: 'Cozy_Crochets — The Living Yarn Store',
     description: 'Heirloom handmade crochet art crafted loop by loop with love.',
-    url: 'https://cozycrochets.com',
     siteName: 'Cozy_Crochets',
     locale: 'en_IN',
     type: 'website',
@@ -50,7 +50,7 @@ export default function RootLayout({
       <body className="font-body bg-bg text-fg min-h-screen flex flex-col selection:bg-blush selection:text-ink">
         <SmoothScrollProvider>
           <Header />
-          <main className="flex-grow">{children}</main>
+          <main className="flex-grow"><p className="bg-cream text-ink text-center text-sm px-4 py-3">Development preview — prices, stock, reviews and delivery details are samples. Checkout saves a demo locally; no payment is processed.</p>{children}</main>
           <Footer />
         </SmoothScrollProvider>
       </body>

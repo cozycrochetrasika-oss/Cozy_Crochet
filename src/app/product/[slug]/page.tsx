@@ -25,6 +25,7 @@ import { ProductGallery } from '@/components/product/product-gallery';
 import { ProductCard } from '@/components/product/product-card';
 import { useCartStore } from '@/store/cart-store';
 import { useAuthStore } from '@/store/auth-store';
+import { useProductsStore } from '@/store/products-store';
 import { getProductWhatsAppInquiryUrl } from '@/lib/config/business';
 
 interface ProductReview {
@@ -43,7 +44,9 @@ export default function ProductDetailPage() {
   const router = useRouter();
   const params = useParams();
   const slug = params?.slug as string;
-  const product = getProductBySlug(slug);
+  const storeProducts = useProductsStore((s) => s.products);
+  const staticProduct = getProductBySlug(slug);
+  const product = storeProducts.find((p) => p.slug === slug) || staticProduct;
 
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);

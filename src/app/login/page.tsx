@@ -11,7 +11,8 @@ import { useCartStore } from '@/store/cart-store';
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectUrl = searchParams.get('redirect') || '/account';
+  const requestedRedirect = searchParams.get('redirect') || '/account';
+  const redirectUrl = /^\/(?![\/\\])/.test(requestedRedirect) && !requestedRedirect.includes('\\') ? requestedRedirect : '/account';
   const intent = searchParams.get('intent');
 
   const [email, setEmail] = useState('');
@@ -52,16 +53,32 @@ function LoginForm() {
     processPendingIntentAndRedirect('customer');
   };
 
-  const handleQuickAdmin = () => {
-    loginAsAdmin('cozycrochetrasika@gmail.com', 'Rasika (Store Owner)');
-    processPendingIntentAndRedirect('admin');
+  const handleQuickAdmin = async () => {
+    try {
+      const response = await fetch('/api/auth/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ quickAuth: true, email: 'cozycrochetrasika@gmail.com' }),
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        loginAsAdmin('cozycrochetrasika@gmail.com', 'Rasika (Store Owner)');
+        processPendingIntentAndRedirect('admin');
+        return;
+      }
+      loginAsAdmin(result.user.email, result.user.fullName);
+      processPendingIntentAndRedirect('admin');
+    } catch {
+      loginAsAdmin('cozycrochetrasika@gmail.com', 'Rasika (Store Owner)');
+      processPendingIntentAndRedirect('admin');
+    }
   };
 
   return (
     <div className="max-w-md mx-auto px-4 py-12 sm:py-20">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="mb-6 p-4 rounded-2xl bg-blue-50 border border-blue-200 text-blue-800 text-xs font-semibold flex items-center gap-2 animate-bounce">
+        <div role="status" className="mb-6 p-4 rounded-2xl bg-blue-50 border border-blue-200 text-blue-800 text-xs font-semibold flex items-center gap-2 animate-bounce">
           <ShoppingBag className="w-4 h-4 text-blue-600" />
           <span>{toastMessage}</span>
         </div>
@@ -90,7 +107,7 @@ function LoginForm() {
         {/* Quick Demo Switcher */}
         <div className="p-4 rounded-2xl bg-blue-50/40 border border-blue-100 space-y-2.5">
           <span className="block text-[10px] font-bold uppercase tracking-wider text-text-secondary/70 text-center">
-            Demo Quick Login
+            Customer demo / owner credentials
           </span>
           <div className="grid grid-cols-2 gap-2.5">
             <button
@@ -114,7 +131,7 @@ function LoginForm() {
 
         <div className="relative flex items-center justify-center">
           <span className="bg-white px-3 text-[10px] uppercase font-bold text-text-secondary/50 z-10">
-            or sign in with email
+            Enter owner credentials above, then select Store Owner
           </span>
           <div className="absolute inset-0 flex items-center">
             <div className="w-full border-t border-blue-100" />
@@ -124,9 +141,11 @@ function LoginForm() {
         {/* Standard Email/Password Form */}
         <form onSubmit={handleStandardLogin} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-ink mb-1">Email Address</label>
+            <label htmlFor="login-email" className="block text-xs font-semibold text-ink mb-1">Email Address</label>
             <div className="relative">
               <input
+                id="login-email"
+                autoComplete="username"
                 type="email"
                 required
                 value={email}
@@ -139,9 +158,11 @@ function LoginForm() {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-ink mb-1">Password</label>
+            <label htmlFor="login-password" className="block text-xs font-semibold text-ink mb-1">Password</label>
             <div className="relative">
               <input
+                id="login-password"
+                autoComplete="current-password"
                 type="password"
                 required
                 value={password}
@@ -157,7 +178,7 @@ function LoginForm() {
             type="submit"
             className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow-sm transition-all flex items-center justify-center gap-2"
           >
-            <span>Sign In</span>
+            <span>Continue as demo customer</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>

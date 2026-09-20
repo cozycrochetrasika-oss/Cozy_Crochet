@@ -41,3 +41,6 @@ screenshots/
 # --- Misc runtime data ---
 coverage/
 .vercel/
+# Regenerated responsive images
+public/optimized-products/
+public/optimized-brand/

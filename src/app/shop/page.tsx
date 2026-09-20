@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState, useMemo, Suspense } from 'react';
+import React, { useState, useMemo, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { ProductCard } from '@/components/product/product-card';
 import { getAllProducts } from '@/data/products';
+import { useProductsStore } from '@/store/products-store';
 import { Sparkles } from 'lucide-react';
 
 function ShopContent() {
@@ -12,8 +13,20 @@ function ShopContent() {
 
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);
   const [sortBy, setSortBy] = useState<'featured' | 'price-low' | 'price-high' | 'rating'>('featured');
+  const [mounted, setMounted] = useState(false);
 
-  const allProducts = getAllProducts();
+  const storeProducts = useProductsStore((s) => s.products);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const allProducts = useMemo(() => {
+    if (mounted && storeProducts && storeProducts.length > 0) {
+      return storeProducts.filter((p) => p.active);
+    }
+    return getAllProducts();
+  }, [mounted, storeProducts]);
   const categories = ['All', 'Flowers', 'Bouquets', 'Bags', 'Accessories', 'Keyrings', 'Footwear'];
 
   const filteredProducts = useMemo(() => {

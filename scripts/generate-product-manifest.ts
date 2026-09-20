@@ -106,8 +106,8 @@ const PRODUCT_FOLDERS: Record<string, {
     name: 'Crochet Kid Shoes',
     slug: 'crochet-kid-shoes',
     category: 'Footwear',
-    shortDescription: 'Ultra-soft baby booties crafted with hypoallergenic organic baby yarn for tiny toes.',
-    description: 'Tender handmade crochet booties for newborns and toddlers. Crafted with certified hypoallergenic baby-grade yarn, flexible ribbing to stay securely on active feet, and seamless toe boxes to prevent irritation.',
+    shortDescription: 'Handmade crochet baby booties. Materials and sizing await owner confirmation.',
+    description: 'Crochet baby booties shown using the supplied product photography. Fiber composition, sizing, care instructions, and suitability must be confirmed before sale.',
     pricePaise: 89900, // ₹899.00
     inventoryQty: 18,
     rating: 4.8,
@@ -188,7 +188,7 @@ export function generateManifest(rootDir: string = process.cwd()): ProductDefini
     // Read all files in folder
     const allFiles = fs.readdirSync(folderPath).filter(file => {
       const ext = path.extname(file).toLowerCase();
-      return SUPPORTED_EXTENSIONS.has(ext);
+      return SUPPORTED_EXTENSIONS.has(ext) && fs.statSync(path.join(folderPath, file)).isFile();
     });
 
     // 5-Slot Strategy
@@ -203,12 +203,12 @@ export function generateManifest(rootDir: string = process.cwd()): ProductDefini
     const findExact = (prefix: string, isVideo = false): string | null => {
       const found = allFiles.find(f => {
         if (usedFiles.has(f)) return false;
-        const base = path.parse(f).name.toLowerCase();
+        const base = path.parse(f).name;
         const ext = path.extname(f).toLowerCase();
         if (isVideo) {
-          return base === prefix.toLowerCase() && ext === '.mp4';
+          return f === 'Video.mp4';
         }
-        return base === prefix.toLowerCase() && ext !== '.mp4';
+        return base === prefix && ext !== '.mp4';
       });
       if (found) usedFiles.add(found);
       return found || null;

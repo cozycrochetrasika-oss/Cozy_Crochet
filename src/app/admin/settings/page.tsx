@@ -29,10 +29,47 @@ export default function AdminSettingsPage() {
 
   const [saved, setSaved] = useState(false);
 
-  const handleSave = (e: React.FormEvent) => {
+  React.useEffect(() => {
+    fetch('/api/settings')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && data.settings) {
+          const s = data.settings;
+          setForm((prev) => ({
+            ...prev,
+            dailyCaption: s.announcementCaption || prev.dailyCaption,
+            festivalMessage: s.festivalMessage || prev.festivalMessage,
+            festivalBannerActive: Boolean(s.festivalMessage),
+            storeWhatsapp: s.contactPhone || prev.storeWhatsapp,
+            storeEmail: s.contactEmail || prev.storeEmail,
+            storeUpiId: s.upiId || prev.storeUpiId,
+          }));
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     updateSettings(form);
     resetAnnouncement(); // allow user to re-see announcement if updated
+    
+    try {
+      await fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          announcementCaption: form.dailyCaption,
+          festivalMessage: form.festivalBannerActive ? form.festivalMessage : '',
+          contactPhone: form.storeWhatsapp,
+          contactEmail: form.storeEmail,
+          upiId: form.storeUpiId,
+        }),
+      });
+    } catch (err) {
+      console.warn('API sync notice:', err);
+    }
+
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   };

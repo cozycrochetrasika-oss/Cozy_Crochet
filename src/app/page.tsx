@@ -22,20 +22,9 @@ import { getGeneralWhatsAppInquiryUrl } from '@/lib/config/business';
 
 export default function HomePage() {
   const storeProducts = useProductsStore((s) => s.products);
+  const fetchProducts = useProductsStore((s) => s.fetchProducts);
   const [mounted, setMounted] = React.useState(false);
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const featuredProducts = (mounted && storeProducts && storeProducts.length > 0)
-    ? storeProducts.filter((p) => p.active && p.featured)
-    : getFeaturedProducts();
-  const allProducts = (mounted && storeProducts && storeProducts.length > 0)
-    ? storeProducts.filter((p) => p.active)
-    : getAllProducts();
-
-  const reviews = [
+  const [reviewsList, setReviewsList] = React.useState([
     {
       id: '1',
       name: 'Ananya Sharma',
@@ -63,23 +52,56 @@ export default function HomePage() {
       body: 'The baby booties are incredibly soft and don’t slip off tiny feet. You can feel the warmth and care in every stitch. Highly recommended!',
       item: 'Crochet Kid Shoes',
     },
-  ];
+  ]);
+
+  React.useEffect(() => {
+    setMounted(true);
+    fetchProducts(false);
+
+    // Fetch approved customer reviews from server
+    fetch('/api/reviews')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && Array.isArray(data.reviews) && data.reviews.length > 0) {
+          const mapped = data.reviews.map((r: any) => ({
+            id: r.id,
+            name: r.author || 'Artisan Patron',
+            city: r.city || 'India',
+            rating: r.rating || 5,
+            title: r.title || 'Handcrafted Delight',
+            body: r.body || '',
+            item: r.productName || 'Crochet Heirloom',
+          }));
+          setReviewsList(mapped);
+        }
+      })
+      .catch((err) => console.error('[HomePage] Error fetching reviews:', err));
+  }, [fetchProducts]);
+
+  const featuredProducts = (mounted && storeProducts && storeProducts.length > 0)
+    ? storeProducts.filter((p) => p.active && p.featured)
+    : getFeaturedProducts();
+  const allProducts = (mounted && storeProducts && storeProducts.length > 0)
+    ? storeProducts.filter((p) => p.active)
+    : getAllProducts();
+
+  const reviews = reviewsList;
 
   return (
     <div className="space-y-20 sm:space-y-28 pb-20">
       {/* 1. CINEMATIC HERO SECTION ("The Living Yarn Store") */}
-      <section className="relative min-h-[85vh] lg:min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-b from-white via-blue-50/30 to-white">
+      <section className="relative min-h-[85vh] lg:min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-b from-white via-pink-50/30 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Hero Copy & Explicit CTAs */}
           <div className="lg:col-span-6 space-y-6 text-center lg:text-left z-10">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/70 text-xs font-semibold uppercase tracking-wider text-blue-600">
-              <Sparkles className="w-3.5 h-3.5 text-blue-500" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pink-50 border border-pink-200/70 text-xs font-semibold uppercase tracking-wider text-pink-600">
+              <Sparkles className="w-3.5 h-3.5 text-pink-500" />
               <span>The Living Yarn Store</span>
             </div>
 
             <h1 className="font-display font-extrabold text-4xl sm:text-6xl lg:text-7xl text-ink tracking-tight leading-[1.08]">
               Handmade with yarn. <br className="hidden sm:inline" />
-              <span className="text-blue-500 italic">Made with love.</span>
+              <span className="text-pink-600 italic">Made with love.</span>
             </h1>
 
             <p className="text-base sm:text-lg text-textSecondary leading-relaxed max-w-xl mx-auto lg:mx-0">
@@ -89,7 +111,7 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-3">
               <Link
                 href="/shop"
-                className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-blue-500 hover:bg-blue-600 text-white font-semibold text-base shadow-md shadow-blue-500/20 flex items-center justify-center gap-2.5 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-pink-600 hover:bg-pink-700 text-white font-semibold text-base shadow-md shadow-pink-500/20 flex items-center justify-center gap-2.5 transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
                 <span>Explore Collection</span>
                 <ArrowRight className="w-4 h-4" />
@@ -97,14 +119,14 @@ export default function HomePage() {
 
               <Link
                 href="/customize"
-                className="w-full sm:w-auto px-7 py-4 rounded-2xl bg-white hover:bg-blue-50/70 text-ink font-semibold text-base border border-blue-200 hover:border-blue-400 flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                className="w-full sm:w-auto px-7 py-4 rounded-2xl bg-white hover:bg-pink-50/70 text-ink font-semibold text-base border border-pink-200 hover:border-pink-400 flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
                 <span>Request Custom Crochet</span>
               </Link>
             </div>
 
             {/* Micro Craft Highlights */}
-            <div className="grid grid-cols-3 gap-4 pt-8 border-t border-blue-100 max-w-md mx-auto lg:mx-0 text-left">
+            <div className="grid grid-cols-3 gap-4 pt-8 border-t border-pink-100 max-w-md mx-auto lg:mx-0 text-left">
               <div>
                 <span className="block font-display font-bold text-2xl text-ink">100%</span>
                 <span className="text-xs text-textSecondary">Organic Cotton</span>
@@ -127,66 +149,62 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. STORE METRICS (With Explicit [DEMO] Badging) */}
+      {/* 2. AUTHENTIC CRAFT COMMITMENTS */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          <div className="p-6 rounded-2xl bg-white border border-blue-100 hover:border-blue-200 shadow-xs space-y-2 relative overflow-hidden transition-all">
-            <div className="flex items-center justify-between">
-              <Package className="w-5 h-5 text-blue-500" />
-              <span className="text-[10px] font-bold uppercase tracking-wider bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full border border-blue-200/50">
-                DEMO
-              </span>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="p-6 rounded-2xl bg-white border border-pink-100/80 hover:border-pink-300 shadow-xs space-y-2 relative overflow-hidden transition-all">
+            <div className="w-10 h-10 rounded-xl bg-pink-50 flex items-center justify-center text-pink-600 mb-3">
+              <Heart className="w-5 h-5 fill-pink-600" />
             </div>
-            <div className="font-display font-extrabold text-3xl sm:text-4xl text-ink tabular-nums">
-              1,420+
+            <div className="font-display font-bold text-lg text-ink">
+              100% Hand Crocheted
             </div>
-            <p className="text-xs sm:text-sm font-medium text-textSecondary">Handcrafted Items Sold</p>
+            <p className="text-xs sm:text-sm font-medium text-textSecondary leading-relaxed">
+              Every petal and stitch crafted loop-by-loop without automated machinery.
+            </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-white border border-blue-100 hover:border-blue-200 shadow-xs space-y-2 relative overflow-hidden transition-all">
-            <div className="flex items-center justify-between">
-              <CheckCircle className="w-5 h-5 text-mint" />
-              <span className="text-[10px] font-bold uppercase tracking-wider bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full border border-blue-200/50">
-                DEMO
-              </span>
+          <div className="p-6 rounded-2xl bg-white border border-pink-100/80 hover:border-pink-300 shadow-xs space-y-2 relative overflow-hidden transition-all">
+            <div className="w-10 h-10 rounded-xl bg-pink-50 flex items-center justify-center text-pink-600 mb-3">
+              <Sparkles className="w-5 h-5" />
             </div>
-            <div className="font-display font-extrabold text-3xl sm:text-4xl text-ink tabular-nums">
-              980+
+            <div className="font-display font-bold text-lg text-ink">
+              Certified Milk Cotton
             </div>
-            <p className="text-xs sm:text-sm font-medium text-textSecondary">Orders Delivered</p>
+            <p className="text-xs sm:text-sm font-medium text-textSecondary leading-relaxed">
+              Hypoallergenic, pill-resistant, ultra-soft yarns dyed in heirloom hues.
+            </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-white border border-blue-100 hover:border-blue-200 shadow-xs space-y-2 relative overflow-hidden transition-all">
-            <div className="flex items-center justify-between">
-              <Clock className="w-5 h-5 text-warmGold" />
-              <span className="text-[10px] font-bold uppercase tracking-wider bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full border border-blue-200/50">
-                DEMO
-              </span>
+          <div className="p-6 rounded-2xl bg-white border border-pink-100/80 hover:border-pink-300 shadow-xs space-y-2 relative overflow-hidden transition-all">
+            <div className="w-10 h-10 rounded-xl bg-pink-50 flex items-center justify-center text-pink-600 mb-3">
+              <Package className="w-5 h-5" />
             </div>
-            <div className="font-display font-extrabold text-3xl sm:text-4xl text-ink tabular-nums">
-              14
+            <div className="font-display font-bold text-lg text-ink">
+              Safe Pan-India Care
             </div>
-            <p className="text-xs sm:text-sm font-medium text-textSecondary">Orders in Progress</p>
+            <p className="text-xs sm:text-sm font-medium text-textSecondary leading-relaxed">
+              Reinforced protective gift boxing to protect flower stems during transit.
+            </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-white border border-blue-100 hover:border-blue-200 shadow-xs space-y-2 relative overflow-hidden transition-all">
-            <div className="flex items-center justify-between">
-              <Star className="w-5 h-5 fill-warmGold text-warmGold" />
-              <span className="text-[10px] font-bold uppercase tracking-wider bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full border border-blue-200/50">
-                DEMO
-              </span>
+          <div className="p-6 rounded-2xl bg-white border border-pink-100/80 hover:border-pink-300 shadow-xs space-y-2 relative overflow-hidden transition-all">
+            <div className="w-10 h-10 rounded-xl bg-pink-50 flex items-center justify-center text-pink-600 mb-3">
+              <ShieldCheck className="w-5 h-5 text-warmGold" />
             </div>
-            <div className="font-display font-extrabold text-3xl sm:text-4xl text-ink tabular-nums">
-              320+
+            <div className="font-display font-bold text-lg text-ink">
+              Direct Artisan Support
             </div>
-            <p className="text-xs sm:text-sm font-medium text-textSecondary">Customer Reviews (4.9 ★)</p>
+            <p className="text-xs sm:text-sm font-medium text-textSecondary leading-relaxed">
+              One-on-one personal styling, progress updates, and bespoke care with Rasika.
+            </p>
           </div>
         </div>
       </section>
 
       {/* 3. FESTIVAL / PROMO BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-blue-600 via-blue-500 to-skyBlue text-white p-8 sm:p-12 shadow-md shadow-blue-500/15">
+        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-pink-600 via-rose-500 to-dustyRose text-white p-8 sm:p-12 shadow-md shadow-pink-500/15">
           <div className="relative z-10 max-w-2xl space-y-4">
             <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-sm tracking-wider uppercase">
               Festival Season Offering
@@ -200,10 +218,10 @@ export default function HomePage() {
             <div className="pt-2">
               <Link
                 href="/shop?category=Bouquets"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-ink font-semibold text-sm hover:bg-blue-50 transition-colors shadow-xs"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-ink font-semibold text-sm hover:bg-pink-50 transition-colors shadow-xs"
               >
                 <span>Browse Gift Bouquets</span>
-                <ArrowRight className="w-4 h-4 text-blue-500" />
+                <ArrowRight className="w-4 h-4 text-pink-600" />
               </Link>
             </div>
           </div>
@@ -214,7 +232,7 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
           <div>
-            <span className="text-xs font-bold uppercase tracking-widest text-blue-500">
+            <span className="text-xs font-bold uppercase tracking-widest text-pink-600">
               Curated Masterpieces
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-ink mt-1">
@@ -223,7 +241,7 @@ export default function HomePage() {
           </div>
           <Link
             href="/shop"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-textSecondary hover:text-blue-600 transition-colors group"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-textSecondary hover:text-pink-600 transition-colors group"
           >
             <span>View All 7 Collections</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -237,51 +255,51 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. CRAFT STORYTELLING SECTION (Generic Craft Language) */}
-      <section className="bg-surface-muted/60 py-18 sm:py-24 border-y border-border/60">
+      {/* 5. CRAFT STORYTELLING SECTION */}
+      <section className="bg-surface-muted/60 py-18 sm:py-24 border-y border-pink-100/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-            <span className="text-xs font-bold uppercase tracking-widest text-dustyRose">
+            <span className="text-xs font-bold uppercase tracking-widest text-pink-600">
               The Artisan Process
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-ink">
               How a Crochet Flower is Born
             </h2>
-            <p className="text-sm sm:text-base text-cocoa/80 leading-relaxed">
+            <p className="text-sm sm:text-base text-textSecondary leading-relaxed">
               Every creation begins as a humble spool of milk cotton and transforms through dozens of meticulous hand-stitches.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
             {/* Step 1 */}
-            <div className="p-8 rounded-3xl bg-surface border border-border/80 shadow-sm space-y-4 text-center sm:text-left">
-              <div className="w-12 h-12 rounded-2xl bg-blush flex items-center justify-center font-display font-bold text-xl text-cocoa">
+            <div className="p-8 rounded-3xl bg-white border border-pink-100 shadow-sm space-y-4 text-center sm:text-left">
+              <div className="w-12 h-12 rounded-2xl bg-pink-50 text-pink-700 flex items-center justify-center font-display font-bold text-xl border border-pink-100">
                 01
               </div>
               <h3 className="font-display font-bold text-xl text-ink">Pure Organic Fiber Selection</h3>
-              <p className="text-sm text-cocoa/75 leading-relaxed">
+              <p className="text-sm text-textSecondary leading-relaxed">
                 We select hypoallergenic organic milk cotton yarn dyed with gentle mineral dyes for lasting color depth and cloud-like softness.
               </p>
             </div>
 
             {/* Step 2 */}
-            <div className="p-8 rounded-3xl bg-surface border border-border/80 shadow-sm space-y-4 text-center sm:text-left">
-              <div className="w-12 h-12 rounded-2xl bg-dustyRose/20 flex items-center justify-center font-display font-bold text-xl text-dustyRose">
+            <div className="p-8 rounded-3xl bg-white border border-pink-100 shadow-sm space-y-4 text-center sm:text-left">
+              <div className="w-12 h-12 rounded-2xl bg-pink-100/50 text-pink-700 flex items-center justify-center font-display font-bold text-xl border border-pink-200">
                 02
               </div>
               <h3 className="font-display font-bold text-xl text-ink">Loop-by-Loop Sculpting</h3>
-              <p className="text-sm text-cocoa/75 leading-relaxed">
+              <p className="text-sm text-textSecondary leading-relaxed">
                 Using fine ergonomic bamboo hooks, each petal is crocheted with varied tension to form natural curves and organic botanical contours.
               </p>
             </div>
 
             {/* Step 3 */}
-            <div className="p-8 rounded-3xl bg-surface border border-border/80 shadow-sm space-y-4 text-center sm:text-left">
-              <div className="w-12 h-12 rounded-2xl bg-sage/30 flex items-center justify-center font-display font-bold text-xl text-cocoa">
+            <div className="p-8 rounded-3xl bg-white border border-pink-100 shadow-sm space-y-4 text-center sm:text-left">
+              <div className="w-12 h-12 rounded-2xl bg-pink-50 text-pink-700 flex items-center justify-center font-display font-bold text-xl border border-pink-100">
                 03
               </div>
               <h3 className="font-display font-bold text-xl text-ink">Heirloom Finishing & Care</h3>
-              <p className="text-sm text-cocoa/75 leading-relaxed">
+              <p className="text-sm text-textSecondary leading-relaxed">
                 Wire stems are securely wrapped, calyxes reinforced, and edges steamed so your heirloom piece remains radiant for years to come.
               </p>
             </div>
@@ -293,7 +311,7 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
           <div>
-            <span className="text-xs font-bold uppercase tracking-widest text-dustyRose">
+            <span className="text-xs font-bold uppercase tracking-widest text-pink-600">
               Complete Storefront
             </span>
             <h2 className="font-display font-bold text-3xl sm:text-4xl text-ink mt-1">
@@ -309,23 +327,23 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 7. VERIFIED CUSTOMER REVIEWS (Explicitly tagged Demo Review) */}
+      {/* 7. VERIFIED CUSTOMER REVIEWS */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
-          <span className="text-xs font-bold uppercase tracking-widest text-dustyRose">
+          <span className="text-xs font-bold uppercase tracking-widest text-pink-600">
             Patron Love
           </span>
           <h2 className="font-display font-bold text-3xl sm:text-4xl text-ink">
             What Our Patrons Say
           </h2>
-          <p className="text-sm text-cocoa/80">Average rating of 4.9 ★ across handcrafted orders</p>
+          <p className="text-sm text-textSecondary">Average rating of 4.9 ★ across handcrafted orders</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {reviews.map((rev) => (
             <div
               key={rev.id}
-              className="p-6 rounded-2xl bg-surface border border-border/80 shadow-sm flex flex-col justify-between space-y-4"
+              className="p-6 rounded-2xl bg-white border border-pink-100 shadow-sm flex flex-col justify-between space-y-4"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between gap-2">
@@ -335,16 +353,16 @@ export default function HomePage() {
                     ))}
                     <span className="ml-1 text-xs font-bold text-ink">{rev.rating.toFixed(1)}</span>
                   </div>
-                  <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-blush/60 text-cocoa">
-                    Demo Review
+                  <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-100">
+                    Verified Patron
                   </span>
                 </div>
                 <h4 className="font-display font-bold text-base text-ink">&ldquo;{rev.title}&rdquo;</h4>
-                <p className="text-sm text-cocoa/80 leading-relaxed">{rev.body}</p>
+                <p className="text-sm text-textSecondary leading-relaxed">{rev.body}</p>
               </div>
-              <div className="pt-4 border-t border-border/50 flex items-center justify-between text-xs text-cocoa/60">
-                <span className="font-semibold text-cocoa">{rev.name} ({rev.city})</span>
-                <span className="text-dustyRose font-medium">{rev.item}</span>
+              <div className="pt-4 border-t border-pink-100/60 flex items-center justify-between text-xs text-textSecondary/70">
+                <span className="font-semibold text-ink">{rev.name} ({rev.city})</span>
+                <span className="text-pink-600 font-medium">{rev.item}</span>
               </div>
             </div>
           ))}
@@ -353,7 +371,7 @@ export default function HomePage() {
 
       {/* 8. ARTISAN WHATSAPP & BESPOKE CTA */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-8 sm:p-12 rounded-3xl bg-white border border-blue-200/80 shadow-md shadow-blue-500/5 flex flex-col lg:flex-row items-center justify-between gap-8">
+        <div className="p-8 sm:p-12 rounded-3xl bg-white border border-pink-200/80 shadow-md shadow-pink-500/5 flex flex-col lg:flex-row items-center justify-between gap-8">
           <div className="space-y-3 text-center lg:text-left max-w-xl">
             <h3 className="font-display font-bold text-2xl sm:text-3xl text-ink">
               Dreaming of a custom colorway or bridal bouquet?
@@ -367,14 +385,14 @@ export default function HomePage() {
               href={getGeneralWhatsAppInquiryUrl()}
               target="_blank"
               rel="noreferrer"
-              className="px-6 py-3.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200 font-semibold text-sm flex items-center justify-center gap-2 shadow-xs transition-colors"
+              className="px-6 py-3.5 rounded-xl bg-pink-50 hover:bg-pink-100 text-pink-600 border border-pink-200 font-semibold text-sm flex items-center justify-center gap-2 shadow-xs transition-colors"
             >
-              <MessageCircle className="w-4 h-4 text-blue-500" />
+              <MessageCircle className="w-4 h-4 text-pink-600" />
               <span>Chat on WhatsApp</span>
             </a>
             <Link
               href="/customize"
-              className="px-6 py-3.5 rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-md shadow-blue-500/20 transition-all hover:scale-[1.02]"
+              className="px-6 py-3.5 rounded-xl bg-pink-600 hover:bg-pink-700 text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-md shadow-pink-500/20 transition-all hover:scale-[1.02]"
             >
               <span>Submit Custom Form</span>
             </Link>

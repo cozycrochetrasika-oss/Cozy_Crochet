@@ -12,13 +12,13 @@ import {
 
 export function Footer() {
   return (
-    <footer className="bg-white text-ink pt-16 pb-12 border-t border-blue-100">
+    <footer className="bg-white text-ink pt-16 pb-12 border-t border-pink-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-blue-100">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-pink-100">
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="relative w-10 h-10 rounded-full overflow-hidden border border-blue-200 shadow-xs flex-shrink-0 bg-white">
+              <div className="relative w-10 h-10 rounded-full overflow-hidden border border-pink-200 shadow-xs flex-shrink-0 bg-white">
                 <Image
                   src="/brand/logo.jpg"
                   alt="Cozy Stitches by Rasika Logo"
@@ -39,7 +39,7 @@ export function Footer() {
                 href={BUSINESS_CONFIG.instagramUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="w-9 h-9 rounded-full bg-blue-50 hover:bg-blue-600 hover:text-white flex items-center justify-center text-blue-600 transition-colors border border-blue-100"
+                className="w-9 h-9 rounded-full bg-pink-50 hover:bg-pink-600 hover:text-white flex items-center justify-center text-pink-600 transition-colors border border-pink-100"
                 aria-label={`Follow ${BUSINESS_CONFIG.name} on Instagram (${BUSINESS_CONFIG.instagramHandle})`}
                 title="Instagram"
               >
@@ -49,7 +49,7 @@ export function Footer() {
                 href={getGeneralWhatsAppInquiryUrl()}
                 target="_blank"
                 rel="noreferrer"
-                className="w-9 h-9 rounded-full bg-blue-50 hover:bg-blue-600 hover:text-white flex items-center justify-center text-blue-600 transition-colors border border-blue-100"
+                className="w-9 h-9 rounded-full bg-pink-50 hover:bg-pink-600 hover:text-white flex items-center justify-center text-pink-600 transition-colors border border-pink-100"
                 aria-label={`Primary WhatsApp Support: ${BUSINESS_CONFIG.primaryPhone}`}
                 title={`Primary WhatsApp (${BUSINESS_CONFIG.primaryPhone})`}
               >
@@ -59,7 +59,7 @@ export function Footer() {
                 href={getAlternateWhatsAppUrl()}
                 target="_blank"
                 rel="noreferrer"
-                className="w-9 h-9 rounded-full bg-blue-50 hover:bg-blue-600 hover:text-white flex items-center justify-center text-blue-600 transition-colors border border-blue-100"
+                className="w-9 h-9 rounded-full bg-pink-50 hover:bg-pink-600 hover:text-white flex items-center justify-center text-pink-600 transition-colors border border-pink-100"
                 aria-label={`Alternate WhatsApp Support: ${BUSINESS_CONFIG.alternatePhone}`}
                 title={`Alternate WhatsApp (${BUSINESS_CONFIG.alternatePhone})`}
               >
@@ -67,7 +67,7 @@ export function Footer() {
               </a>
               <a
                 href={getTelUrl(BUSINESS_CONFIG.primaryPhoneNormalized)}
-                className="w-9 h-9 rounded-full bg-blue-50 hover:bg-blue-600 hover:text-white flex items-center justify-center text-blue-600 transition-colors border border-blue-100"
+                className="w-9 h-9 rounded-full bg-pink-50 hover:bg-pink-600 hover:text-white flex items-center justify-center text-pink-600 transition-colors border border-pink-100"
                 aria-label={`Call direct: ${BUSINESS_CONFIG.primaryPhone}`}
                 title={`Call ${BUSINESS_CONFIG.primaryPhone}`}
               >
@@ -75,7 +75,7 @@ export function Footer() {
               </a>
               <a
                 href={getMailtoUrl()}
-                className="w-9 h-9 rounded-full bg-blue-50 hover:bg-blue-600 hover:text-white flex items-center justify-center text-blue-600 transition-colors border border-blue-100"
+                className="w-9 h-9 rounded-full bg-pink-50 hover:bg-pink-600 hover:text-white flex items-center justify-center text-pink-600 transition-colors border border-pink-100"
                 aria-label={`Email ${BUSINESS_CONFIG.email}`}
                 title={`Email: ${BUSINESS_CONFIG.email}`}
               >
@@ -88,12 +88,12 @@ export function Footer() {
           <div>
             <h4 className="font-display font-semibold text-base text-ink mb-4">Artisan Collections</h4>
             <ul className="space-y-2.5 text-sm text-text-secondary">
-              <li><Link href="/shop?category=Flowers" className="hover:text-blue-600 transition-colors">Crochet Flowers</Link></li>
-              <li><Link href="/shop?category=Bouquets" className="hover:text-blue-600 transition-colors">Everlasting Bouquets</Link></li>
-              <li><Link href="/shop?category=Bags" className="hover:text-blue-600 transition-colors">Woven Bags</Link></li>
-              <li><Link href="/shop?category=Accessories" className="hover:text-blue-600 transition-colors">Headbands & Accents</Link></li>
-              <li><Link href="/shop?category=Keyrings" className="hover:text-blue-600 transition-colors">Miniature Charms</Link></li>
-              <li><Link href="/shop?category=Footwear" className="hover:text-blue-600 transition-colors">Kid Booties</Link></li>
+              <li><Link href="/shop?category=Flowers" className="hover:text-pink-600 transition-colors">Crochet Flowers</Link></li>
+              <li><Link href="/shop?category=Bouquets" className="hover:text-pink-600 transition-colors">Everlasting Bouquets</Link></li>
+              <li><Link href="/shop?category=Bags" className="hover:text-pink-600 transition-colors">Woven Bags</Link></li>
+              <li><Link href="/shop?category=Accessories" className="hover:text-pink-600 transition-colors">Headbands & Accents</Link></li>
+              <li><Link href="/shop?category=Keyrings" className="hover:text-pink-600 transition-colors">Miniature Charms</Link></li>
+              <li><Link href="/shop?category=Footwear" className="hover:text-pink-600 transition-colors">Kid Booties</Link></li>
             </ul>
           </div>
 
@@ -101,20 +101,20 @@ export function Footer() {
           <div>
             <h4 className="font-display font-semibold text-base text-ink mb-4">Customer Care</h4>
             <ul className="space-y-2.5 text-sm text-text-secondary">
-              <li><Link href="/customize" className="hover:text-blue-600 transition-colors">Bespoke Custom Orders</Link></li>
-              <li><Link href="/orders" className="hover:text-blue-600 transition-colors">Track Order Status</Link></li>
-              <li><Link href="/shipping" className="hover:text-blue-600 transition-colors">Shipping & Timelines</Link></li>
-              <li><Link href="/returns" className="hover:text-blue-600 transition-colors">Handmade Return Policy</Link></li>
-              <li><Link href="/privacy" className="hover:text-blue-600 transition-colors">Privacy & Security</Link></li>
-              <li><Link href="/contact" className="hover:text-blue-600 transition-colors">Contact Artisan</Link></li>
+              <li><Link href="/customize" className="hover:text-pink-600 transition-colors">Bespoke Custom Orders</Link></li>
+              <li><Link href="/orders" className="hover:text-pink-600 transition-colors">Track Order Status</Link></li>
+              <li><Link href="/shipping" className="hover:text-pink-600 transition-colors">Shipping & Timelines</Link></li>
+              <li><Link href="/returns" className="hover:text-pink-600 transition-colors">Handmade Return Policy</Link></li>
+              <li><Link href="/privacy" className="hover:text-pink-600 transition-colors">Privacy & Security</Link></li>
+              <li><Link href="/contact" className="hover:text-pink-600 transition-colors">Contact Artisan</Link></li>
             </ul>
           </div>
 
           {/* Craft Promise & Direct Contact */}
           <div className="space-y-3">
             <h4 className="font-display font-semibold text-base text-ink mb-4">The Craft Promise</h4>
-            <div className="p-4 rounded-2xl bg-blue-50/50 border border-blue-100 space-y-2">
-              <div className="flex items-center gap-2 text-xs font-semibold text-blue-700 uppercase tracking-wider">
+            <div className="p-4 rounded-2xl bg-pink-50/50 border border-pink-100 space-y-2">
+              <div className="flex items-center gap-2 text-xs font-semibold text-pink-700 uppercase tracking-wider">
                 <ShieldCheck className="w-4 h-4 text-warmGold" />
                 <span>100% Hand Crocheted</span>
               </div>
@@ -134,7 +134,7 @@ export function Footer() {
           <p>© {new Date().getFullYear()} {BUSINESS_CONFIG.name} by {BUSINESS_CONFIG.founder}. All handmade rights reserved.</p>
           <p className="flex items-center gap-1">
             <span>Stitched with care</span>
-            <Heart className="w-3.5 h-3.5 text-blue-500 fill-current inline" />
+            <Heart className="w-3.5 h-3.5 text-pink-500 fill-current inline" />
             <span>for cozy homes everywhere</span>
           </p>
         </div>

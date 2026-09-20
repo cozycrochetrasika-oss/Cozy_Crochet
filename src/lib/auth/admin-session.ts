@@ -3,7 +3,9 @@ const lifetime = 60 * 60;
 
 async function signingKey() {
   const secret = process.env.ADMIN_SESSION_SECRET;
-  if (!secret || secret.length < 32) throw new Error('Admin session signing is not configured');
+  if (!secret || secret.length < 32) {
+    throw new Error('ADMIN_SESSION_SECRET must be configured with at least 32 characters');
+  }
   return crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign', 'verify']);
 }
 
@@ -38,3 +40,8 @@ export const adminCookieOptions = {
   path: '/',
   maxAge: lifetime,
 };
+
+export async function verifyAdminRequest(request: { cookies: { get: (name: string) => { value?: string } | undefined } }): Promise<boolean> {
+  const token = request.cookies.get(ADMIN_COOKIE)?.value;
+  return verifyAdminSession(token);
+}

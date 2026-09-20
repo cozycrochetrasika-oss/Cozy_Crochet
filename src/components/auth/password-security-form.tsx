@@ -106,8 +106,8 @@ export function PasswordSecurityForm({ mode, onSuccess }: PasswordSecurityFormPr
       )}
 
       {successMessage && (
-        <div className="p-4 rounded-2xl bg-blue-50 border border-blue-200 text-blue-800 text-xs font-semibold flex items-center gap-2.5">
-          <Check className="w-4 h-4 flex-shrink-0 text-blue-600" />
+        <div className="p-4 rounded-2xl bg-pink-50 border border-pink-200 text-pink-800 text-xs font-semibold flex items-center gap-2.5">
+          <Check className="w-4 h-4 flex-shrink-0 text-pink-600" />
           <span>{successMessage}</span>
         </div>
       )}
@@ -129,7 +129,7 @@ export function PasswordSecurityForm({ mode, onSuccess }: PasswordSecurityFormPr
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
               placeholder="Enter your existing password"
-              className="w-full pl-10 pr-12 py-2.5 rounded-xl border border-blue-200 bg-white text-ink text-sm outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400"
+              className="w-full pl-10 pr-12 py-2.5 rounded-xl border border-pink-200 bg-white text-ink text-sm outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
             />
             <KeyRound className="w-4 h-4 text-text-secondary/60 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <button
@@ -159,7 +159,7 @@ export function PasswordSecurityForm({ mode, onSuccess }: PasswordSecurityFormPr
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="Create a strong new password"
-              className="w-full pl-10 pr-12 py-2.5 rounded-xl border border-blue-200 bg-white text-ink text-sm outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400"
+              className="w-full pl-10 pr-12 py-2.5 rounded-xl border border-pink-200 bg-white text-ink text-sm outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
             />
             <Lock className="w-4 h-4 text-text-secondary/60 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <button
@@ -184,9 +184,9 @@ export function PasswordSecurityForm({ mode, onSuccess }: PasswordSecurityFormPr
                         ? strengthScore <= 2
                           ? 'bg-amber-400'
                           : strengthScore === 3
-                          ? 'bg-blue-400'
-                          : 'bg-blue-600'
-                        : 'bg-blue-100'
+                          ? 'bg-pink-400'
+                          : 'bg-pink-600'
+                        : 'bg-pink-100'
                     }`}
                   />
                 ))}
@@ -196,7 +196,7 @@ export function PasswordSecurityForm({ mode, onSuccess }: PasswordSecurityFormPr
               <div className="grid grid-cols-2 gap-1.5 text-[11px] pt-1">
                 <div
                   className={`flex items-center gap-1.5 ${
-                    hasMinLength ? 'text-blue-600 font-medium' : 'text-text-secondary/70'
+                    hasMinLength ? 'text-pink-600 font-medium' : 'text-text-secondary/70'
                   }`}
                 >
                   {hasMinLength ? <Check className="w-3.5 h-3.5" /> : <X className="w-3.5 h-3.5" />}
@@ -204,7 +204,7 @@ export function PasswordSecurityForm({ mode, onSuccess }: PasswordSecurityFormPr
                 </div>
                 <div
                   className={`flex items-center gap-1.5 ${
-                    hasUppercase ? 'text-blue-600 font-medium' : 'text-text-secondary/70'
+                    hasUppercase ? 'text-pink-600 font-medium' : 'text-text-secondary/70'
                   }`}
                 >
                   {hasUppercase ? <Check className="w-3.5 h-3.5" /> : <X className="w-3.5 h-3.5" />}
@@ -212,7 +212,7 @@ export function PasswordSecurityForm({ mode, onSuccess }: PasswordSecurityFormPr
                 </div>
                 <div
                   className={`flex items-center gap-1.5 ${
-                    hasLowercase ? 'text-blue-600 font-medium' : 'text-text-secondary/70'
+                    hasLowercase ? 'text-pink-600 font-medium' : 'text-text-secondary/70'
                   }`}
                 >
                   {hasLowercase ? <Check className="w-3.5 h-3.5" /> : <X className="w-3.5 h-3.5" />}
@@ -220,7 +220,7 @@ export function PasswordSecurityForm({ mode, onSuccess }: PasswordSecurityFormPr
                 </div>
                 <div
                   className={`flex items-center gap-1.5 ${
-                    hasSpecialOrNumber ? 'text-blue-600 font-medium' : 'text-text-secondary/70'
+                    hasSpecialOrNumber ? 'text-pink-600 font-medium' : 'text-text-secondary/70'
                   }`}
                 >
                   {hasSpecialOrNumber ? (
@@ -251,7 +251,7 @@ export function PasswordSecurityForm({ mode, onSuccess }: PasswordSecurityFormPr
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Re-enter your new password"
-              className="w-full pl-10 pr-12 py-2.5 rounded-xl border border-blue-200 bg-white text-ink text-sm outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400"
+              className="w-full pl-10 pr-12 py-2.5 rounded-xl border border-pink-200 bg-white text-ink text-sm outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
             />
             <Lock className="w-4 h-4 text-text-secondary/60 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <button
@@ -267,7 +267,7 @@ export function PasswordSecurityForm({ mode, onSuccess }: PasswordSecurityFormPr
           {confirmPassword.length > 0 && (
             <div className="pt-1.5">
               {passwordsMatch ? (
-                <span className="text-[11px] font-semibold text-blue-600 flex items-center gap-1">
+                <span className="text-[11px] font-semibold text-pink-600 flex items-center gap-1">
                   <Check className="w-3.5 h-3.5" /> Passwords match
                 </span>
               ) : (
@@ -284,7 +284,7 @@ export function PasswordSecurityForm({ mode, onSuccess }: PasswordSecurityFormPr
           <button
             type="submit"
             disabled={loading || strengthScore < 4 || !passwordsMatch}
-            className="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold text-sm shadow-sm transition-all flex items-center justify-center gap-2"
+            className="w-full py-3.5 rounded-xl bg-pink-600 hover:bg-pink-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold text-sm shadow-sm transition-all flex items-center justify-center gap-2"
           >
             {loading ? (
               <span>Updating password...</span>

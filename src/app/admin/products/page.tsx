@@ -8,7 +8,11 @@ import { formatINR } from '@/data/products';
 import { useProductsStore } from '@/store/products-store';
 
 export default function AdminProductsPage() {
-  const { products, toggleProductActive, deleteProduct } = useProductsStore();
+  const { products, toggleProductActive, deleteProduct, fetchProducts } = useProductsStore();
+
+  React.useEffect(() => {
+    fetchProducts(true);
+  }, [fetchProducts]);
 
   const handleDelete = (id: string, name: string) => {
     if (confirm(`Are you sure you want to delete "${name}" from the store catalog?`)) {
@@ -18,7 +22,7 @@ export default function AdminProductsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-blue-100">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-pink-100">
         <div>
           <h1 className="font-display font-bold text-2xl text-ink">Product Catalog Management</h1>
           <p className="text-xs text-text-secondary">
@@ -27,16 +31,16 @@ export default function AdminProductsPage() {
         </div>
         <Link
           href="/admin/products/new"
-          className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm transition-colors w-fit"
+          className="px-4 py-2.5 rounded-xl bg-pink-600 hover:bg-pink-700 text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm transition-colors w-fit"
         >
           <PlusCircle className="w-4 h-4" />
           <span>Add New Product</span>
         </Link>
       </div>
 
-      <div className="overflow-x-auto rounded-2xl border border-blue-100 bg-white shadow-2xs">
+      <div className="overflow-x-auto rounded-2xl border border-pink-100 bg-white shadow-2xs">
         <table className="w-full text-xs text-left">
-          <thead className="bg-blue-50/50 text-ink font-semibold uppercase tracking-wider border-b border-blue-100">
+          <thead className="bg-pink-50/50 text-ink font-semibold uppercase tracking-wider border-b border-pink-100">
             <tr>
               <th className="py-3.5 px-4">Item</th>
               <th className="py-3.5 px-4">Category</th>
@@ -47,14 +51,14 @@ export default function AdminProductsPage() {
               <th className="py-3.5 px-4 text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-blue-50">
+          <tbody className="divide-y divide-pink-50">
             {products.map((p) => {
               const mainMedia = p.media.find((m) => m.slot === 'main') || p.media[0];
               return (
-                <tr key={p.id} className="hover:bg-blue-50/20 transition-colors">
+                <tr key={p.id} className="hover:bg-pink-50/20 transition-colors">
                   <td className="py-3.5 px-4">
                     <div className="flex items-center gap-3">
-                      <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-blue-50/50 border border-blue-100 flex-shrink-0">
+                      <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-pink-50/50 border border-pink-100 flex-shrink-0">
                         {mainMedia && (
                           <Image src={mainMedia.publicUrl} alt={p.name} fill className="object-cover" sizes="60px" />
                         )}
@@ -74,7 +78,7 @@ export default function AdminProductsPage() {
                       {p.inventoryQty} units
                     </span>
                   </td>
-                  <td className="py-3.5 px-4 font-mono text-blue-600 font-semibold">{p.soldCount}</td>
+                  <td className="py-3.5 px-4 font-mono text-pink-600 font-semibold">{p.soldCount}</td>
                   <td className="py-3.5 px-4">
                     <button
                       type="button"
@@ -85,7 +89,7 @@ export default function AdminProductsPage() {
                           : 'bg-rose-50 text-rose-700 border border-rose-200'
                       }`}
                     >
-                      {p.active ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />}
+                      {p.active ? <Check className="w-3" /> : <X className="w-3" />}
                       <span>{p.active ? 'Active' : 'Disabled'}</span>
                     </button>
                   </td>
@@ -93,7 +97,7 @@ export default function AdminProductsPage() {
                     <div className="flex items-center justify-end gap-1.5">
                       <Link
                         href={`/admin/products/${p.id}`}
-                        className="p-1.5 rounded-lg hover:bg-blue-50 text-text-secondary hover:text-blue-600 transition-colors"
+                        className="p-1.5 rounded-lg hover:bg-pink-50 text-text-secondary hover:text-pink-600 transition-colors"
                         title="Edit Product Details"
                       >
                         <Edit3 className="w-4 h-4" />

@@ -9,11 +9,11 @@ export default function AccountSecurityPage() {
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-8">
       {/* Header with Back button */}
-      <div className="flex items-center justify-between pb-4 border-b border-blue-100">
+      <div className="flex items-center justify-between pb-4 border-b border-pink-100">
         <div className="space-y-1">
           <Link
             href="/account"
-            className="inline-flex items-center gap-1 text-xs font-semibold text-text-secondary hover:text-blue-600 transition-colors mb-2"
+            className="inline-flex items-center gap-1 text-xs font-semibold text-text-secondary hover:text-pink-600 transition-colors mb-2"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to Account</span>
@@ -27,9 +27,9 @@ export default function AccountSecurityPage() {
         </div>
       </div>
 
-      <div className="p-6 sm:p-8 rounded-3xl bg-white border border-blue-100 shadow-sm space-y-6">
-        <div className="flex items-center gap-2.5 pb-4 border-b border-blue-100">
-          <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+      <div className="p-6 sm:p-8 rounded-3xl bg-white border border-pink-100 shadow-sm space-y-6">
+        <div className="flex items-center gap-2.5 pb-4 border-b border-pink-100">
+          <div className="w-9 h-9 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center">
             <KeyRound className="w-4 h-4" />
           </div>
           <div>

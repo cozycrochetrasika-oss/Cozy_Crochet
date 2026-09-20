@@ -78,8 +78,10 @@ export function getAdminRecord(): AdminCredentialRecord | null {
         return null;
       }
       const defaultEmail = (process.env.ADMIN_BOOTSTRAP_EMAIL || 'cozycrochetrasika@gmail.com').toLowerCase();
-      const defaultPass = process.env.ADMIN_BOOTSTRAP_PASSWORD || 'CozyAdmin@2026!';
-      bootstrapAdmin(defaultEmail, defaultPass);
+      const defaultPass = process.env.ADMIN_BOOTSTRAP_PASSWORD;
+      if (defaultPass) {
+        bootstrapAdmin(defaultEmail, defaultPass);
+      }
     }
     if (!fs.existsSync(getStorePath())) {
       return null;

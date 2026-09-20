@@ -6,7 +6,7 @@ test.describe('Cozy_Crochets Storefront End-to-End Suite', () => {
     await expect(page).toHaveTitle(/Cozy_Crochets/i);
 
     // Announcement bar
-    await expect(page.locator('text=Every loop carries care, warmth, and handmade magic.').first()).toBeVisible();
+    await expect(page.locator('text=Heirloom Handcrafted Crochet').first()).toBeVisible();
 
     // Cinematic hero exact headline, subheading, CTAs
     await expect(page.locator('text=Handmade with yarn.').first()).toBeVisible();
@@ -15,12 +15,14 @@ test.describe('Cozy_Crochets Storefront End-to-End Suite', () => {
     await expect(page.locator('text=Explore Collection').first()).toBeVisible();
     await expect(page.locator('text=Request Custom Crochet').first()).toBeVisible();
 
-    // Store metrics with DEMO badges
-    await expect(page.locator('text=1,420+').first()).toBeVisible();
-    await expect(page.locator('text=DEMO').first()).toBeVisible();
+    // Store authentic craft commitments
+    await expect(page.locator('text=100% Hand Crocheted').first()).toBeVisible();
+    await expect(page.locator('text=Certified Milk Cotton').first()).toBeVisible();
+    await expect(page.locator('text=Safe Pan-India Care').first()).toBeVisible();
+    await expect(page.locator('text=Direct Artisan Support').first()).toBeVisible();
 
-    // Seeded reviews with Demo Review badge
-    await expect(page.locator('text=Demo Review').first()).toBeVisible();
+    // Customer reviews
+    await expect(page.locator('text=Verified Patron').first()).toBeVisible();
   });
 
   test('2. Product card emphasizes bold labels and values', async ({ page }) => {
@@ -90,7 +92,7 @@ test.describe('Cozy_Crochets Storefront End-to-End Suite', () => {
   test('6. Forged admin role cookie cannot authorize protected routes', async ({ page, context }) => {
     await context.addCookies([{ name: 'cozy_auth_role', value: 'admin', domain: 'localhost', path: '/' }]);
     await page.goto('/admin/orders');
-    await expect(page).toHaveURL(/\/login\?.*admin_access_required/);
+    await expect(page).toHaveURL(/\/admin\/login/);
     const response = await page.request.post('/api/auth/admin/change-password', {
       headers: { origin: 'http://localhost:3000' },
       data: { currentPassword: 'invalid', newPassword: 'InvalidPass123!' },
@@ -109,7 +111,9 @@ test.describe('Cozy_Crochets Storefront End-to-End Suite', () => {
     await page.fill('input#custom-size', '12 inch bouquet');
     await page.fill('textarea#custom-desc', 'Custom wedding anniversary bouquet with roses and sunflowers.');
 
-    await page.click('button:has-text("Submit Bespoke Request")');
+    const submitBtn = page.locator('button:has-text("Submit Bespoke Request")');
+    await submitBtn.scrollIntoViewIfNeeded();
+    await submitBtn.click();
     await expect(page.locator('text=Bespoke Request Received!')).toBeVisible();
   });
 });

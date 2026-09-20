@@ -194,6 +194,29 @@ export default function CheckoutPage() {
       rawCodeForDemo: newCode,
     });
 
+    // Also persist order to server-side repository
+    fetch('/api/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        customerName: customerInfo.fullName,
+        customerEmail: customerInfo.email,
+        customerPhone: customerInfo.phone,
+        shippingAddress: `${address.addressLine1}, ${address.city}, ${address.state} - ${address.postalCode}`,
+        items: items.map((i) => ({
+          productId: i.product.id,
+          productName: i.product.name,
+          quantity: i.quantity,
+          pricePaise: i.product.pricePaise,
+          image: i.product.media?.[0]?.publicUrl || '/products/Sunflower/main.png',
+        })),
+        totalPaise: grandTotalPaise,
+        shippingPaise,
+        paymentProvider: paymentMethod,
+        customerNotes: '',
+      }),
+    }).catch((err) => console.error('[Checkout] Error saving order to server:', err));
+
     setOrderSummary({
       id: orderRecordId,
       orderNumber: newOrderNum,

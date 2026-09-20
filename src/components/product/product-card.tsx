@@ -48,12 +48,12 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <div
-      className="group relative bg-white rounded-2xl border border-blue-100/90 overflow-hidden shadow-xs hover:shadow-md hover:shadow-blue-500/10 hover:-translate-y-1.5 hover:scale-[1.01] hover:rotate-[0.5deg] hover:border-blue-300 transition-all duration-300 flex flex-col h-full"
+      className="group relative bg-white rounded-2xl border border-pink-100/90 overflow-hidden shadow-xs hover:shadow-md hover:shadow-pink-500/10 hover:-translate-y-1.5 hover:scale-[1.01] hover:rotate-[0.5deg] hover:border-pink-300 transition-all duration-300 flex flex-col h-full"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Product Image Frame */}
-      <Link prefetch={false} href={`/product/${product.slug}`} className="block relative aspect-[4/5] overflow-hidden bg-blue-50/30">
+      <Link prefetch={false} href={`/product/${product.slug}`} className="block relative aspect-[4/5] overflow-hidden bg-pink-50/30">
         {/* Main Image */}
         {mainMedia && (
           <Image
@@ -84,13 +84,13 @@ export function ProductCard({ product }: { product: Product }) {
         {/* Badges Overlay */}
         <div className="absolute top-3 left-3 flex flex-col gap-1.5 z-10">
           {product.bestSeller && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-600 text-white shadow-xs">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-pink-600 text-white shadow-xs">
               <Sparkles className="w-3 h-3 text-warmGold" />
               Best Seller
             </span>
           )}
           {product.soldCount > 100 && (
-            <span className="inline-block px-2.5 py-1 rounded-full text-xs font-medium bg-white/90 backdrop-blur-sm text-blue-700 border border-blue-200/50 shadow-xs">
+            <span className="inline-block px-2.5 py-1 rounded-full text-xs font-medium bg-white/90 backdrop-blur-sm text-pink-700 border border-pink-200/50 shadow-xs">
               {product.soldCount}+ handcrafted
             </span>
           )}
@@ -98,7 +98,7 @@ export function ProductCard({ product }: { product: Product }) {
 
         {/* Quick View Button on Hover */}
         <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
-          <div className="w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm text-ink hover:text-blue-600 flex items-center justify-center shadow-sm">
+          <div className="w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm text-ink hover:text-pink-600 flex items-center justify-center shadow-sm">
             <Eye className="w-4 h-4" />
           </div>
         </div>
@@ -109,7 +109,7 @@ export function ProductCard({ product }: { product: Product }) {
         <div>
           {/* Category & Rating */}
           <div className="flex items-center justify-between gap-2 text-xs mb-2 text-textSecondary">
-            <span className="uppercase tracking-wider font-semibold text-blue-500">{product.category}</span>
+            <span className="uppercase tracking-wider font-semibold text-pink-600">{product.category}</span>
             <div className="flex items-center gap-1">
               <Star className="w-3.5 h-3.5 fill-warmGold text-warmGold" />
               <span className="font-semibold text-ink">{product.rating.toFixed(1)}</span>
@@ -118,14 +118,14 @@ export function ProductCard({ product }: { product: Product }) {
           </div>
 
           {/* EXACT BOLD VISUAL EMPHASIS FOR 3 LABELS & VALUES */}
-          <div className="space-y-1 py-2 px-3 rounded-xl bg-blue-50/50 border border-blue-100 text-xs">
+          <div className="space-y-1 py-2 px-3 rounded-xl bg-pink-50/50 border border-pink-100 text-xs">
             <div className="flex items-baseline justify-between gap-1">
               <span className="font-bold text-ink">Item Name:</span>
               <span className="font-semibold text-textSecondary text-right truncate">{product.name}</span>
             </div>
             <div className="flex items-baseline justify-between gap-1">
               <span className="font-bold text-ink">Item Quantity:</span>
-              <span className={`font-semibold ${product.inventoryQty > 0 ? 'text-blue-600' : 'text-danger'}`}>
+              <span className={`font-semibold ${product.inventoryQty > 0 ? 'text-pink-600' : 'text-danger'}`}>
                 {product.inventoryQty > 0 ? `${product.inventoryQty} in stock` : 'Out of stock'}
               </span>
             </div>
@@ -142,13 +142,13 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
 
         {/* Action Controls: View Details + Add to Bag */}
-        <div className="pt-3 border-t border-blue-100/80 flex items-center gap-2">
+        <div className="pt-3 border-t border-pink-100/80 flex items-center gap-2">
           <Link
             href={`/product/${product.slug}`}
-            className="flex-1 py-2 px-3 rounded-xl border border-blue-200 hover:border-blue-400 bg-white hover:bg-blue-50/50 text-ink text-xs font-semibold flex items-center justify-center gap-1 transition-colors"
+            className="flex-1 py-2 px-3 rounded-xl border border-pink-200 hover:border-pink-400 bg-white hover:bg-pink-50/50 text-ink text-xs font-semibold flex items-center justify-center gap-1 transition-colors"
           >
             <span>Details</span>
-            <ArrowRight className="w-3 h-3 text-blue-500" />
+            <ArrowRight className="w-3 h-3 text-pink-500" />
           </Link>
 
           <button
@@ -160,7 +160,7 @@ export function ProductCard({ product }: { product: Product }) {
                 ? 'bg-ink/10 text-ink/40 cursor-not-allowed'
                 : addedAnimation
                 ? 'bg-mint text-ink shadow-xs'
-                : 'bg-blue-500 hover:bg-blue-600 text-white shadow-xs hover:shadow-sm'
+                : 'bg-pink-600 hover:bg-pink-700 text-white shadow-xs hover:shadow-sm'
             }`}
           >
             {addedAnimation ? (

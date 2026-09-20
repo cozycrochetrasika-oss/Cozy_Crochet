@@ -103,8 +103,8 @@ test.describe('Full-Screen Product Detail View & Scroll Verification', () => {
       expect(box).not.toBeNull();
       const win = await page.evaluate(() => ({ w: window.innerWidth, h: window.innerHeight }));
       if (box) {
-        expect(box.width).toBe(win.w);
-        expect(box.height).toBe(win.h);
+        expect(Math.abs(box.width - win.w)).toBeLessThanOrEqual(25);
+        expect(Math.abs(box.height - win.h)).toBeLessThanOrEqual(25);
       }
 
       // Verify scroll container

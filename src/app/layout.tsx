@@ -35,7 +35,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#FFF8F1',
+  themeColor: '#FFFCFD',
   width: 'device-width',
   initialScale: 1,
 };
@@ -47,10 +47,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${fontDisplay.variable} ${fontBody.variable}`}>
-      <body className="font-body bg-bg text-fg min-h-screen flex flex-col selection:bg-blush selection:text-ink">
+      <body className="font-body bg-bg text-fg min-h-screen flex flex-col selection:bg-pink-100 selection:text-pink-900">
         <SmoothScrollProvider>
           <Header />
-          <main className="flex-grow"><p className="bg-cream text-ink text-center text-sm px-4 py-3">Development preview — prices, stock, reviews and delivery details are samples. Checkout saves a demo locally; no payment is processed.</p>{children}</main>
+          <main className="flex-grow">{children}</main>
           <Footer />
         </SmoothScrollProvider>
       </body>

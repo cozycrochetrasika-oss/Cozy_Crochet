@@ -10,40 +10,40 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // New White + Light Blue System Tokens
+        // Premium White + Pink System Tokens
         white: '#FFFFFF',
         'background-soft': 'var(--background-soft)',
-        'surface-blue': 'var(--surface-blue)',
+        'surface-pink': 'var(--surface-pink)',
 
-        blue: {
-          50: '#F3FAFF',
-          100: '#E5F4FF',
-          200: '#CEEAFE',
-          300: '#A9DDF8',
-          400: '#7BC9EE',
-          500: '#53B4E1',
-          600: '#3893BD',
+        pink: {
+          50: '#FFF7FA',
+          100: '#FFEAF1',
+          200: '#FFD6E3',
+          300: '#F8B9CF',
+          400: '#EE91B3',
+          500: '#DD6996',
+          600: '#C64D7D',
+          700: '#A93B68',
+          800: '#7F294D',
         },
 
-        skyBlue: '#53B4E1',
-        powderBlue: '#CEEAFE',
-        softBlue: '#F0F8FF',
+        roseSoft: '#F4CCD8',
+        blush: '#F8DDE5',
+        dustyRose: '#D99AAC',
 
         // Refined Pastel Highlights
-        lavender: '#DCCFF4',
-        blush: '#F5D5DC',
+        lavender: '#E4D7F3',
         mint: '#D9F0E5',
-        warmGold: '#D8B875',
+        warmGold: '#D4B06B',
 
         // Neutrals
-        ink: '#17242D',
-        textSecondary: '#526470',
-        textSubtle: '#748794',
+        ink: '#241B20',
+        textSecondary: '#6A5962',
+        textSubtle: '#8E7A85',
 
-        // Remapped legacy tokens for seamless backward compatibility
-        cream: '#FFFFFF',
-        cocoa: '#526470',
-        dustyRose: '#53B4E1',
+        // Remapped tokens for backwards compatibility
+        cream: '#FFFCFD',
+        cocoa: '#6A5962',
         sage: '#D9F0E5',
 
         // Semantic UI Tokens backed by CSS variables
@@ -52,7 +52,7 @@ const config: Config = {
           DEFAULT: 'var(--surface)',
           raised: 'var(--surface-raised)',
           muted: 'var(--surface-muted)',
-          blue: 'var(--surface-blue)',
+          pink: 'var(--surface-pink)',
         },
         fg: {
           DEFAULT: 'var(--fg)',

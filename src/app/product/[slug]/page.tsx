@@ -37,7 +37,6 @@ interface ProductReview {
   title: string;
   comment: string;
   verified: boolean;
-  isDemo?: boolean;
 }
 
 export default function ProductDetailPage() {
@@ -71,7 +70,6 @@ export default function ProductDetailPage() {
       comment:
         'The milk cotton texture feels incredible. The stitches are perfectly uniform and tight with zero loose threads. You can instantly feel the artisan love poured into every petal.',
       verified: true,
-      isDemo: true,
     },
     {
       id: 'rev_2',
@@ -83,7 +81,6 @@ export default function ProductDetailPage() {
       comment:
         'Arrived in signature craft box with a handwritten note card. Ordered this as an anniversary gift and it was the highlight of the celebration.',
       verified: true,
-      isDemo: true,
     },
     {
       id: 'rev_3',
@@ -95,9 +92,31 @@ export default function ProductDetailPage() {
       comment:
         'Colors match the photography perfectly. The wire stems hold their shape while feeling delicate and natural. Highly recommended!',
       verified: true,
-      isDemo: true,
     },
   ]);
+
+  // Fetch server-moderated reviews for this product
+  useEffect(() => {
+    if (!product?.id) return;
+    fetch(`/api/reviews?productId=${encodeURIComponent(product.id)}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && Array.isArray(data.reviews) && data.reviews.length > 0) {
+          const mapped: ProductReview[] = data.reviews.map((r: any) => ({
+            id: r.id,
+            author: r.author || 'Artisan Patron',
+            city: r.city || 'India',
+            rating: r.rating || 5,
+            date: r.date || 'Recent',
+            title: r.title || 'Handmade Heirloom',
+            comment: r.body || '',
+            verified: Boolean(r.verifiedPurchase),
+          }));
+          setReviewsList(mapped);
+        }
+      })
+      .catch((err) => console.error('[ProductDetail] Error fetching reviews:', err));
+  }, [product?.id]);
 
   const addItem = useCartStore((state) => state.addItem);
   const { isAuthenticated, setPendingIntent } = useAuthStore();
@@ -208,8 +227,23 @@ export default function ProductDetailPage() {
       title: reviewTitle.trim() || 'Handcrafted treasure',
       comment: reviewComment.trim(),
       verified: true,
-      isDemo: true,
     };
+
+    // Also persist review to server-side repository
+    fetch('/api/reviews', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        productId: product.id,
+        productName: product.name,
+        author: reviewAuthor.trim(),
+        city: 'India',
+        rating: reviewRating,
+        title: reviewTitle.trim() || 'Handcrafted treasure',
+        body: reviewComment.trim(),
+        verifiedPurchase: true,
+      }),
+    }).catch((err) => console.error('[ProductDetail] Error submitting review to server:', err));
 
     setReviewsList((prev) => [newReview, ...prev]);
     setReviewAuthor('');
@@ -235,13 +269,13 @@ export default function ProductDetailPage() {
       className="fixed inset-0 z-50 w-full max-w-full min-w-0 h-[100dvh] bg-white flex flex-col overflow-hidden select-text"
     >
       {/* 2. STICKY TOP PRODUCT TOOLBAR */}
-      <header className="sticky top-0 z-30 flex-shrink-0 w-full bg-white/95 backdrop-blur-md border-b border-blue-100 px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <header className="sticky top-0 z-30 flex-shrink-0 w-full bg-white/95 backdrop-blur-md border-b border-pink-100 px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* LEFT: Back Button + Breadcrumbs */}
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={handleBackOrClose}
-            className="inline-flex items-center gap-2 text-sm font-semibold text-ink/80 hover:text-blue-600 p-2 rounded-xl hover:bg-blue-50 transition-colors"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-ink/80 hover:text-pink-600 p-2 rounded-xl hover:bg-pink-50 transition-colors"
             aria-label="Back to catalogue"
             title="Back to previous page"
           >
@@ -249,12 +283,12 @@ export default function ProductDetailPage() {
             <span className="hidden sm:inline">Back</span>
           </button>
 
-          <nav className="hidden md:flex items-center gap-2 text-xs font-medium text-text-secondary pl-3 border-l border-blue-100">
-            <Link href="/" className="hover:text-blue-600 transition-colors">
+          <nav className="hidden md:flex items-center gap-2 text-xs font-medium text-text-secondary pl-3 border-l border-pink-100">
+            <Link href="/" className="hover:text-pink-600 transition-colors">
               Home
             </Link>
             <span>/</span>
-            <Link href="/shop" className="hover:text-blue-600 transition-colors">
+            <Link href="/shop" className="hover:text-pink-600 transition-colors">
               Shop
             </Link>
             <span>/</span>
@@ -267,7 +301,7 @@ export default function ProductDetailPage() {
           <button
             type="button"
             onClick={handleBackOrClose}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-ink/80 hover:text-blue-600 p-2 rounded-xl hover:bg-blue-50 transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-ink/80 hover:text-pink-600 p-2 rounded-xl hover:bg-pink-50 transition-colors"
             aria-label="Minimize full-screen product view"
             title="Minimize"
           >
@@ -278,7 +312,7 @@ export default function ProductDetailPage() {
           <button
             type="button"
             onClick={handleBackOrClose}
-            className="p-2 rounded-xl text-ink/70 hover:text-ink hover:bg-blue-50 transition-colors"
+            className="p-2 rounded-xl text-ink/70 hover:text-ink hover:bg-pink-50 transition-colors"
             aria-label="Close product view (Escape)"
             title="Close (Esc)"
           >
@@ -287,12 +321,7 @@ export default function ProductDetailPage() {
         </div>
       </header>
 
-      {/* 3. PRIMARY SINGLE VERTICAL SCROLL CONTAINER
-          - Holds entire product content
-          - Native mouse wheel & trackpad scroll works everywhere
-          - data-lenis-prevent prevents Lenis interference
-          - overscroll-contain & touch-pan-y
-      */}
+      {/* 3. PRIMARY SINGLE VERTICAL SCROLL CONTAINER */}
       <div
         ref={scrollContainerRef}
         data-lenis-prevent
@@ -301,7 +330,7 @@ export default function ProductDetailPage() {
         style={{
           WebkitOverflowScrolling: 'touch',
           scrollbarWidth: 'thin',
-          scrollbarColor: '#7BC9EE transparent',
+          scrollbarColor: '#F27A9B transparent',
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-16">
@@ -315,7 +344,7 @@ export default function ProductDetailPage() {
             {/* Right Column (~42%): Product Information */}
             <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-4">
               <div className="space-y-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
+                <span className="text-xs font-bold uppercase tracking-wider text-pink-600">
                   {product.category} • Handcrafted Masterpiece
                 </span>
                 <h1
@@ -337,14 +366,14 @@ export default function ProductDetailPage() {
                     ({product.reviewCount} customer reviews)
                   </span>
                   <span className="text-xs text-border">•</span>
-                  <span className="text-xs font-medium text-blue-600">
+                  <span className="text-xs font-medium text-pink-600">
                     {product.soldCount} crafted & delivered
                   </span>
                 </div>
               </div>
 
               {/* Price & Stock Badge */}
-              <div className="p-4 rounded-2xl bg-blue-50/40 border border-blue-100 flex items-baseline justify-between shadow-xs">
+              <div className="p-4 rounded-2xl bg-pink-50/40 border border-pink-100 flex items-baseline justify-between shadow-xs">
                 <div>
                   <span className="block text-[10px] uppercase font-semibold text-text-secondary tracking-wider">
                     Price (Inclusive of all taxes)
@@ -356,7 +385,7 @@ export default function ProductDetailPage() {
                 <div className="text-right">
                   <span
                     className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
-                      maxInventory > 0 ? 'bg-mint/30 text-ink' : 'bg-blue-100 text-blue-700'
+                      maxInventory > 0 ? 'bg-mint/30 text-ink' : 'bg-pink-100 text-pink-700'
                     }`}
                   >
                     {maxInventory > 0 ? `In Stock (${maxInventory} ready)` : 'Made to Order'}
@@ -371,15 +400,15 @@ export default function ProductDetailPage() {
               </div>
 
               {/* Quantity Stepper & Add to Bag */}
-              <div className="space-y-4 pt-4 border-t border-blue-100">
+              <div className="space-y-4 pt-4 border-t border-pink-100">
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                   {/* Clamped Quantity Selector */}
-                  <div className="flex items-center justify-between sm:justify-start rounded-xl border border-blue-100 bg-white overflow-hidden shadow-xs">
+                  <div className="flex items-center justify-between sm:justify-start rounded-xl border border-pink-200 bg-white overflow-hidden shadow-xs">
                     <button
                       type="button"
                       onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                       disabled={quantity <= 1}
-                      className="px-3.5 py-2.5 text-ink hover:bg-blue-50 transition-colors font-bold disabled:opacity-40"
+                      className="px-3.5 py-2.5 text-ink hover:bg-pink-50 transition-colors font-bold disabled:opacity-40"
                       aria-label="Decrease quantity"
                     >
                       -
@@ -391,7 +420,7 @@ export default function ProductDetailPage() {
                       type="button"
                       onClick={() => setQuantity((q) => Math.min(maxInventory, q + 1))}
                       disabled={quantity >= maxInventory}
-                      className="px-3.5 py-2.5 text-ink hover:bg-blue-50 transition-colors font-bold disabled:opacity-40"
+                      className="px-3.5 py-2.5 text-ink hover:bg-pink-50 transition-colors font-bold disabled:opacity-40"
                       aria-label="Increase quantity"
                     >
                       +
@@ -405,10 +434,10 @@ export default function ProductDetailPage() {
                     disabled={maxInventory <= 0}
                     className={`flex-grow py-3 px-5 sm:px-6 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 shadow-sm transition-all ${
                       maxInventory <= 0
-                        ? 'bg-blue-100 text-text-secondary/40 cursor-not-allowed'
+                        ? 'bg-pink-100 text-text-secondary/40 cursor-not-allowed'
                         : added
                         ? 'bg-mint/40 text-ink scale-95'
-                        : 'bg-blue-600 hover:bg-blue-700 text-white hover:shadow'
+                        : 'bg-pink-600 hover:bg-pink-700 text-white hover:shadow'
                     }`}
                   >
                     {added ? (
@@ -430,28 +459,28 @@ export default function ProductDetailPage() {
                   href={whatsappInquiryUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-full py-3 px-4 rounded-xl border border-blue-200 hover:border-blue-300 bg-blue-50/70 hover:bg-blue-100/70 text-blue-700 font-semibold text-xs flex items-center justify-center gap-2 transition-colors shadow-xs"
+                  className="w-full py-3 px-4 rounded-xl border border-pink-200 hover:border-pink-300 bg-pink-50/70 hover:bg-pink-100/70 text-pink-700 font-semibold text-xs flex items-center justify-center gap-2 transition-colors shadow-xs"
                 >
-                  <MessageCircle className="w-4 h-4 text-blue-600" />
+                  <MessageCircle className="w-4 h-4 text-pink-600" />
                   <span>Ask Artisan via WhatsApp / Inquire Custom Color</span>
                 </a>
               </div>
 
               {/* Artisan Guarantees */}
               <div className="grid grid-cols-2 gap-3 pt-4 text-xs text-text-secondary">
-                <div className="flex items-center gap-2 p-3 rounded-xl bg-white border border-blue-100">
+                <div className="flex items-center gap-2 p-3 rounded-xl bg-white border border-pink-100">
                   <ShieldCheck className="w-4 h-4 text-warmGold" />
                   <span>100% Hand Crocheted</span>
                 </div>
-                <div className="flex items-center gap-2 p-3 rounded-xl bg-white border border-blue-100">
-                  <Truck className="w-4 h-4 text-blue-500" />
+                <div className="flex items-center gap-2 p-3 rounded-xl bg-white border border-pink-100">
+                  <Truck className="w-4 h-4 text-pink-600" />
                   <span>Ships in 3-5 Days</span>
                 </div>
-                <div className="flex items-center gap-2 p-3 rounded-xl bg-white border border-blue-100">
+                <div className="flex items-center gap-2 p-3 rounded-xl bg-white border border-pink-100">
                   <Sparkles className="w-4 h-4 text-lavender" />
                   <span>Free Gift Packaging</span>
                 </div>
-                <div className="flex items-center gap-2 p-3 rounded-xl bg-white border border-blue-100">
+                <div className="flex items-center gap-2 p-3 rounded-xl bg-white border border-pink-100">
                   <RotateCcw className="w-4 h-4 text-mint" />
                   <span>Safe Delivery Guarantee</span>
                 </div>
@@ -460,7 +489,7 @@ export default function ProductDetailPage() {
           </div>
 
           {/* SECTION B: ARTISAN SPECIFICATIONS & YARN CARE */}
-          <section className="p-6 sm:p-8 rounded-3xl bg-white border border-blue-100 shadow-sm space-y-6">
+          <section className="p-6 sm:p-8 rounded-3xl bg-white border border-pink-100 shadow-sm space-y-6">
             <h3 className="font-display font-bold text-xl text-ink">
               Artisan Specifications & Yarn Care
             </h3>
@@ -490,10 +519,10 @@ export default function ProductDetailPage() {
           </section>
 
           {/* SECTION C: CUSTOMER REVIEWS (Seamlessly scrollable) */}
-          <section className="p-6 sm:p-8 rounded-3xl bg-white border border-blue-100 shadow-sm space-y-8">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-blue-100 pb-6">
+          <section className="p-6 sm:p-8 rounded-3xl bg-white border border-pink-100 shadow-sm space-y-8">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-pink-100 pb-6">
               <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
+                <span className="text-xs font-bold uppercase tracking-wider text-pink-600">
                   Verified Patron Feedback
                 </span>
                 <h2 className="font-display font-bold text-2xl sm:text-3xl text-ink mt-0.5">
@@ -512,9 +541,9 @@ export default function ProductDetailPage() {
 
               <a
                 href="#write-review"
-                className="px-5 py-2.5 rounded-xl border border-blue-200 hover:border-blue-400 bg-blue-50/50 hover:bg-blue-50 text-xs font-semibold text-ink inline-flex items-center gap-1.5 self-start sm:self-auto transition-colors"
+                className="px-5 py-2.5 rounded-xl border border-pink-200 hover:border-pink-400 bg-pink-50/50 hover:bg-pink-50 text-xs font-semibold text-ink inline-flex items-center gap-1.5 self-start sm:self-auto transition-colors"
               >
-                <MessageSquare className="w-3.5 h-3.5 text-blue-600" />
+                <MessageSquare className="w-3.5 h-3.5 text-pink-600" />
                 <span>Write a Review</span>
               </a>
             </div>
@@ -524,7 +553,7 @@ export default function ProductDetailPage() {
               {reviewsList.map((rev) => (
                 <div
                   key={rev.id}
-                  className="p-5 rounded-2xl bg-blue-50/30 border border-blue-100 flex flex-col justify-between space-y-3"
+                  className="p-5 rounded-2xl bg-pink-50/30 border border-pink-100 flex flex-col justify-between space-y-3"
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between gap-2">
@@ -535,14 +564,14 @@ export default function ProductDetailPage() {
                             className={`w-3.5 h-3.5 ${
                               i < Math.floor(rev.rating)
                                 ? 'fill-warmGold text-warmGold'
-                                : 'text-blue-100 fill-blue-100'
+                                : 'text-pink-100 fill-pink-100'
                             }`}
                           />
                         ))}
                       </div>
-                      {rev.isDemo && (
-                        <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-blue-100/70 text-blue-700">
-                          Demo Review
+                      {rev.verified && (
+                        <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-pink-50 text-pink-700 border border-pink-100">
+                          Verified Patron
                         </span>
                       )}
                     </div>
@@ -550,7 +579,7 @@ export default function ProductDetailPage() {
                     <p className="text-xs text-text-secondary leading-relaxed">{rev.comment}</p>
                   </div>
 
-                  <div className="pt-3 border-t border-blue-100/70 flex items-center justify-between text-xs text-text-secondary">
+                  <div className="pt-3 border-t border-pink-100/70 flex items-center justify-between text-xs text-text-secondary">
                     <span className="font-semibold text-ink">
                       {rev.author} ({rev.city})
                     </span>
@@ -561,7 +590,7 @@ export default function ProductDetailPage() {
             </div>
 
             {/* Review Submission Form */}
-            <div id="write-review" className="pt-6 border-t border-blue-100">
+            <div id="write-review" className="pt-6 border-t border-pink-100">
               <h4 className="font-display font-bold text-lg text-ink mb-4">
                 Share Your Handmade Experience
               </h4>
@@ -582,7 +611,7 @@ export default function ProductDetailPage() {
                         placeholder="e.g. Kavita Shah"
                         value={reviewAuthor}
                         onChange={(e) => setReviewAuthor(e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-blue-200 bg-white text-sm outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white text-sm outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
                       />
                     </div>
 
@@ -599,7 +628,7 @@ export default function ProductDetailPage() {
                           >
                             <Star
                               className={`w-6 h-6 ${
-                                star <= reviewRating ? 'fill-warmGold text-warmGold' : 'text-blue-100'
+                                star <= reviewRating ? 'fill-warmGold text-warmGold' : 'text-pink-100'
                               }`}
                             />
                           </button>
@@ -615,7 +644,7 @@ export default function ProductDetailPage() {
                       placeholder="e.g. Beautiful craft and exquisite texture"
                       value={reviewTitle}
                       onChange={(e) => setReviewTitle(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-blue-200 bg-white text-sm outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white text-sm outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
                     />
                   </div>
 
@@ -627,13 +656,13 @@ export default function ProductDetailPage() {
                       placeholder="Share what you loved about the yarn, stitches, or gift packaging..."
                       value={reviewComment}
                       onChange={(e) => setReviewComment(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-blue-200 bg-white text-sm outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-pink-200 bg-white text-sm outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center gap-2 transition-all shadow-xs"
+                    className="px-6 py-2.5 rounded-xl bg-pink-600 hover:bg-pink-700 text-white text-xs font-semibold flex items-center gap-2 transition-all shadow-xs"
                   >
                     <Send className="w-3.5 h-3.5" />
                     <span>Submit Review</span>

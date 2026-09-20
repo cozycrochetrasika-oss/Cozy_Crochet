@@ -4,33 +4,38 @@
 
 @layer base {
   :root {
-    /* New Brand Visual Direction: White + Light Blue + Pastels */
-    --background: #FFFFFF;
-    --background-soft: #F8FCFF;
+    /* Premium Pink Brand Visual System */
+    --background: #FFFCFD;
+    --background-soft: #FFF7FA;
     --surface: #FFFFFF;
-    --surface-blue: #F0F8FF;
+    --surface-pink: #FFF0F5;
     --surface-raised: #FFFFFF;
-    --surface-muted: #F0F8FF;
+    --surface-muted: #FFF7FA;
 
-    /* Blue Scales */
-    --blue-50: #F3FAFF;
-    --blue-100: #E5F4FF;
-    --blue-200: #CEEAFE;
-    --blue-300: #A9DDF8;
-    --blue-400: #7BC9EE;
-    --blue-500: #53B4E1;
-    --blue-600: #3893BD;
+    /* Pink Palette Tokens */
+    --pink-50: #FFF7FA;
+    --pink-100: #FFEAF1;
+    --pink-200: #FFD6E3;
+    --pink-300: #F8B9CF;
+    --pink-400: #EE91B3;
+    --pink-500: #DD6996;
+    --pink-600: #C64D7D;
+    --pink-700: #A93B68;
+    --pink-800: #7F294D;
+
+    --rose-soft: #F4CCD8;
+    --blush: #F8DDE5;
+    --dusty-rose: #D99AAC;
 
     /* Typography Neutrals */
-    --ink: #17242D;
-    --text-secondary: #526470;
-    --text-subtle: #748794;
+    --ink: #241B20;
+    --text-secondary: #6A5962;
+    --text-subtle: #8E7A85;
 
-    /* Complementary Pastel Accents (Used Sparingly) */
-    --lavender: #DCCFF4;
-    --blush: #F5D5DC;
+    /* Complementary Accents */
+    --warm-gold: #D4B06B;
+    --lavender: #E4D7F3;
     --mint: #D9F0E5;
-    --warm-gold: #D8B875;
 
     /* Semantic UI Tokens */
     --bg: var(--background);
@@ -39,22 +44,22 @@
     --fg-subtle: var(--text-subtle);
     --fg-on-accent: #FFFFFF;
 
-    --border: rgba(56, 147, 189, 0.16);
-    --border-strong: rgba(56, 147, 189, 0.28);
+    --border: #F0D6DF;
+    --border-strong: #E5BED0;
 
-    --accent: var(--blue-500);
-    --accent-hover: var(--blue-600);
-    --accent-soft: var(--blue-100);
+    --accent: var(--pink-600);
+    --accent-hover: var(--pink-700);
+    --accent-soft: var(--pink-100);
 
     --success: var(--mint);
     --warning: var(--warm-gold);
     --danger: #E05252;
 
-    /* Elevations with soft sky-blue tints */
-    --shadow-sm: 0 1px 3px rgba(23, 36, 45, 0.04);
-    --shadow-md: 0 6px 16px -4px rgba(23, 36, 45, 0.06), 0 2px 6px -2px rgba(56, 147, 189, 0.04);
-    --shadow-lg: 0 16px 36px -8px rgba(23, 36, 45, 0.08), 0 4px 12px -2px rgba(56, 147, 189, 0.06);
-    --shadow-yarn: 0 12px 32px -4px rgba(123, 201, 238, 0.25);
+    /* Elevations with soft rose-tinted shadows */
+    --shadow-sm: 0 1px 3px rgba(36, 27, 32, 0.04);
+    --shadow-md: 0 6px 16px -4px rgba(36, 27, 32, 0.06), 0 2px 6px -2px rgba(198, 77, 125, 0.04);
+    --shadow-lg: 0 16px 36px -8px rgba(36, 27, 32, 0.08), 0 4px 12px -2px rgba(198, 77, 125, 0.06);
+    --shadow-yarn: 0 12px 32px -4px rgba(221, 105, 150, 0.22);
 
     /* Radii */
     --radius-sm: 8px;

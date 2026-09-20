@@ -9,14 +9,18 @@ import type { NextRequest } from 'next/server';
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // Exempt /admin/login from authentication barrier
+  if (pathname === '/admin/login') {
+    return NextResponse.next();
+  }
+
   // Protect /admin and any nested route /admin/*
   if (pathname === '/admin' || pathname.startsWith('/admin/')) {
     const session = request.cookies.get(ADMIN_COOKIE)?.value;
 
     if (!(await verifyAdminSession(session))) {
-      const loginUrl = new URL('/login', request.url);
+      const loginUrl = new URL('/admin/login', request.url);
       loginUrl.searchParams.set('redirect', pathname);
-      loginUrl.searchParams.set('error', 'admin_access_required');
       return NextResponse.redirect(loginUrl);
     }
   }

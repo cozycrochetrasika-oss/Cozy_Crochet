@@ -1,6 +1,6 @@
 import { ADMIN_COOKIE, createAdminSession, adminCookieOptions } from '@/lib/auth/admin-session';
 import { NextRequest, NextResponse } from 'next/server';
-import { getAdminRecord, verifyAdminPassword } from '@/lib/auth/admin-auth';
+import { getAdminRecord, verifyAdminPassword, bootstrapAdmin } from '@/lib/auth/admin-auth';
 
 export async function POST(request: NextRequest) {
   try {
@@ -10,28 +10,8 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json().catch(() => ({}));
-    const { email, password, quickAuth } = body;
+    const { email, password } = body;
 
-    // 1. Quick Store Owner Authentication Mode
-    if (quickAuth) {
-      const response = NextResponse.json({
-        success: true,
-        user: {
-          id: 'admin_owner',
-          email: 'cozycrochetrasika@gmail.com',
-          fullName: 'Rasika (Store Owner)',
-          role: 'admin',
-        },
-      });
-
-      const sessionToken = await createAdminSession();
-      response.cookies.set(ADMIN_COOKIE, sessionToken, adminCookieOptions);
-      response.cookies.set('cozy_auth_role', 'admin', { path: '/', maxAge: 86400, sameSite: 'lax' });
-
-      return response;
-    }
-
-    // 2. Standard Email + Password Credentials
     if (typeof email !== 'string' || typeof password !== 'string' || !email || !password || password.length > 1024) {
       return NextResponse.json(
         { success: false, error: 'Email and password are required.' },
@@ -39,14 +19,25 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const record = getAdminRecord();
-    const adminEmail = (record?.email || process.env.ADMIN_BOOTSTRAP_EMAIL || 'cozycrochetrasika@gmail.com').toLowerCase();
+    const adminEmail = (process.env.ADMIN_BOOTSTRAP_EMAIL || 'cozycrochetrasika@gmail.com').toLowerCase();
     const emailMatches = adminEmail === email.trim().toLowerCase();
 
-    const isDirectMatch =
-      password === (process.env.ADMIN_BOOTSTRAP_PASSWORD || 'CozyAdmin@2026!') ||
-      password === 'RasikaAdmin2026!';
-    const isValid = emailMatches && (isDirectMatch || verifyAdminPassword(password));
+    if (!emailMatches) {
+      return NextResponse.json(
+        { success: false, error: 'Invalid admin credentials.' },
+        { status: 401 }
+      );
+    }
+
+    let isValid = verifyAdminPassword(password);
+
+    // Initial bootstrap check if no stored record exists yet
+    if (!isValid && !getAdminRecord() && process.env.ADMIN_BOOTSTRAP_PASSWORD) {
+      if (password === process.env.ADMIN_BOOTSTRAP_PASSWORD) {
+        bootstrapAdmin(adminEmail, password);
+        isValid = true;
+      }
+    }
 
     if (!isValid) {
       return NextResponse.json(

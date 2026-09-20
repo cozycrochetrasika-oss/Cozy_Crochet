@@ -51,7 +51,7 @@ const SLIDES: Slide[] = [
     price: '₹1,499',
     rating: '4.8',
     badge: 'Reinforced Organic Cotton',
-    badgeColor: 'bg-sky-50 text-sky-700 border-sky-200',
+    badgeColor: 'bg-pink-50 text-pink-700 border-pink-200',
     image: '/products/Bag/main.png',
     video: '/products/Bag/Video.mp4',
     slug: 'crochet-bag',
@@ -130,17 +130,17 @@ export function HeroSlideshow() {
     >
       {/* Ambient Floating Yarn Particles (Pure CSS / Lightweight) */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        <div className="absolute -top-6 -left-6 w-48 h-48 rounded-full bg-blue-100/50 blur-3xl animate-pulse" />
-        <div className="absolute -bottom-6 -right-6 w-56 h-56 rounded-full bg-sky-100/60 blur-3xl" />
+        <div className="absolute -top-6 -left-6 w-48 h-48 rounded-full bg-pink-100/50 blur-3xl animate-pulse" />
+        <div className="absolute -bottom-6 -right-6 w-56 h-56 rounded-full bg-rose-100/60 blur-3xl" />
         
         {/* Animated motes */}
-        <span className="absolute top-1/4 left-1/12 w-2 h-2 rounded-full bg-blue-400/40 animate-bounce delay-100" />
-        <span className="absolute bottom-1/3 right-1/12 w-2.5 h-2.5 rounded-full bg-sky-300/50 animate-ping delay-500" />
-        <span className="absolute top-2/3 left-1/6 w-1.5 h-1.5 rounded-full bg-indigo-300/40 animate-pulse delay-700" />
+        <span className="absolute top-1/4 left-1/12 w-2 h-2 rounded-full bg-pink-400/40 animate-bounce delay-100" />
+        <span className="absolute bottom-1/3 right-1/12 w-2.5 h-2.5 rounded-full bg-rose-300/50 animate-ping delay-500" />
+        <span className="absolute top-2/3 left-1/6 w-1.5 h-1.5 rounded-full bg-pink-300/40 animate-pulse delay-700" />
       </div>
 
       {/* Main Slideshow Card */}
-      <div className="relative w-full aspect-square max-w-[380px] sm:max-w-[440px] lg:max-w-[480px] rounded-3xl bg-white/90 backdrop-blur-sm border border-blue-100 shadow-xl shadow-blue-500/5 p-4 sm:p-5 flex flex-col justify-between">
+      <div className="relative w-full aspect-square max-w-[380px] sm:max-w-[440px] lg:max-w-[480px] rounded-3xl bg-white/90 backdrop-blur-sm border border-pink-100 shadow-xl shadow-pink-500/5 p-4 sm:p-5 flex flex-col justify-between">
         
         {/* Top Badges & Media Toggle */}
         <div className="flex items-center justify-between z-20 gap-2">
@@ -151,14 +151,14 @@ export function HeroSlideshow() {
 
           <div className="flex items-center gap-2">
             {/* Mode Toggle: Photos vs Video */}
-            <div className="flex items-center gap-1 bg-blue-50/80 p-0.5 rounded-full border border-blue-200/60 text-[11px]">
+            <div className="flex items-center gap-1 bg-pink-50/80 p-0.5 rounded-full border border-pink-200/60 text-[11px]">
               <button
                 type="button"
                 onClick={() => setViewMode('image')}
                 className={`px-2.5 py-0.5 rounded-full font-semibold transition-all ${
                   viewMode === 'image'
-                    ? 'bg-blue-600 text-white shadow-xs'
-                    : 'text-blue-600 hover:text-blue-800'
+                    ? 'bg-pink-600 text-white shadow-xs'
+                    : 'text-pink-600 hover:text-pink-800'
                 }`}
               >
                 Slides
@@ -168,8 +168,8 @@ export function HeroSlideshow() {
                 onClick={() => setViewMode('video')}
                 className={`px-2 py-0.5 rounded-full font-semibold transition-all flex items-center gap-1 ${
                   viewMode === 'video'
-                    ? 'bg-blue-600 text-white shadow-xs'
-                    : 'text-blue-600 hover:text-blue-800'
+                    ? 'bg-pink-600 text-white shadow-xs'
+                    : 'text-pink-600 hover:text-pink-800'
                 }`}
               >
                 <Play className="w-2.5 h-2.5 fill-current" />
@@ -177,7 +177,7 @@ export function HeroSlideshow() {
               </button>
             </div>
 
-            <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-white/90 border border-blue-100 text-ink text-xs font-semibold shadow-2xs">
+            <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-white/90 border border-pink-100 text-ink text-xs font-semibold shadow-2xs">
               <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
               <span>{current.rating}</span>
             </div>
@@ -185,7 +185,7 @@ export function HeroSlideshow() {
         </div>
 
         {/* Media Stage (Photos Slideshow or Video Reel) */}
-        <div className="relative flex-1 my-3 overflow-hidden rounded-2xl bg-gradient-to-b from-blue-50/40 to-white flex items-center justify-center min-h-[260px]">
+        <div className="relative flex-1 my-3 overflow-hidden rounded-2xl bg-gradient-to-b from-pink-50/40 to-white flex items-center justify-center min-h-[260px]">
           {viewMode === 'video' ? (
             <div className="relative w-full h-full flex items-center justify-center p-1">
               <video
@@ -229,7 +229,7 @@ export function HeroSlideshow() {
             type="button"
             onClick={prevSlide}
             aria-label="Previous Slide"
-            className="absolute left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/90 hover:bg-white text-ink hover:text-blue-600 border border-blue-100 shadow-sm flex items-center justify-center transition-all hover:scale-105 active:scale-95 z-30"
+            className="absolute left-2.5 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/90 hover:bg-white text-ink hover:text-pink-600 border border-pink-100 shadow-sm flex items-center justify-center transition-all hover:scale-105 active:scale-95 z-30"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
@@ -237,16 +237,16 @@ export function HeroSlideshow() {
             type="button"
             onClick={nextSlide}
             aria-label="Next Slide"
-            className="absolute right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/90 hover:bg-white text-ink hover:text-blue-600 border border-blue-100 shadow-sm flex items-center justify-center transition-all hover:scale-105 active:scale-95 z-30"
+            className="absolute right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/90 hover:bg-white text-ink hover:text-pink-600 border border-pink-100 shadow-sm flex items-center justify-center transition-all hover:scale-105 active:scale-95 z-30"
           >
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
 
         {/* Bottom Slide Info & Quick Link */}
-        <div className="flex items-center justify-between pt-2 border-t border-blue-50 z-20">
+        <div className="flex items-center justify-between pt-2 border-t border-pink-50 z-20">
           <div>
-            <span className="text-[10px] uppercase font-bold tracking-wider text-blue-600 block">
+            <span className="text-[10px] uppercase font-bold tracking-wider text-pink-600 block">
               {current.category}
             </span>
             <span className="font-display font-bold text-base sm:text-lg text-ink block leading-tight">
@@ -260,7 +260,7 @@ export function HeroSlideshow() {
             </span>
             <Link
               href={`/product/${current.slug}`}
-              className="p-2 rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-600 hover:text-white border border-blue-200 hover:border-blue-600 transition-all flex items-center justify-center group"
+              className="p-2 rounded-xl bg-pink-50 hover:bg-pink-600 text-pink-600 hover:text-white border border-pink-200 hover:border-pink-600 transition-all flex items-center justify-center group"
               title="View Product Details"
             >
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -282,8 +282,8 @@ export function HeroSlideshow() {
             aria-label={`Go to slide ${index + 1}: ${slide.name}`}
             className={`h-2 rounded-full transition-all duration-300 ${
               index === currentIndex
-                ? 'w-6 bg-blue-600'
-                : 'w-2 bg-blue-200 hover:bg-blue-300'
+                ? 'w-6 bg-pink-600'
+                : 'w-2 bg-pink-200 hover:bg-pink-300'
             }`}
           />
         ))}

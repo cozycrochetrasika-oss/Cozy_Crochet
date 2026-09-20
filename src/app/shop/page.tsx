@@ -16,10 +16,12 @@ function ShopContent() {
   const [mounted, setMounted] = useState(false);
 
   const storeProducts = useProductsStore((s) => s.products);
+  const fetchProducts = useProductsStore((s) => s.fetchProducts);
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    fetchProducts(false);
+  }, [fetchProducts]);
 
   const allProducts = useMemo(() => {
     if (mounted && storeProducts && storeProducts.length > 0) {

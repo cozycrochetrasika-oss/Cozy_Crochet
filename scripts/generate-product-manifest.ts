@@ -162,27 +162,12 @@ export function generateManifest(rootDir: string = process.cwd()): ProductDefini
   }
 
   for (const [folderName, meta] of Object.entries(PRODUCT_FOLDERS)) {
-    const folderPath = path.join(rootDir, folderName);
+    const publicFolder = path.join(publicProductsDir, folderName);
+    const rootFolder = path.join(rootDir, folderName);
+    const folderPath = fs.existsSync(publicFolder) ? publicFolder : rootFolder;
     if (!fs.existsSync(folderPath)) {
       console.warn(`[Manifest Warning] Directory "${folderName}" not found at ${folderPath}. Skipping.`);
       continue;
-    }
-
-    // Set up symlink in public/products/<folderName> if not existing
-    const symlinkTarget = path.join(publicProductsDir, folderName);
-    try {
-      if (!fs.existsSync(symlinkTarget)) {
-        // Use relative symlink: ../../<folderName>
-        const relativeTarget = path.join('..', '..', folderName);
-        fs.symlinkSync(relativeTarget, symlinkTarget, 'dir');
-        console.log(`[Media Link] Created symlink for "${folderName}" -> "${relativeTarget}"`);
-      }
-    } catch (symlinkErr) {
-      console.warn(`[Media Link] Symlink failed for ${folderName}, copying files instead:`, symlinkErr);
-      // Fallback to directory copy if symlinks are disallowed by OS/permissions
-      if (!fs.existsSync(symlinkTarget)) {
-        fs.cpSync(folderPath, symlinkTarget, { recursive: true });
-      }
     }
 
     // Read all files in folder
